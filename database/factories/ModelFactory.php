@@ -11,9 +11,13 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\User::class, function ($faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
+        'name' => 'admin',
+        'username' => 'admin',
+        'email' => 'admin@admin.com',
+        'password' => app('hash')->make('admin'),
+        'role' => 1,
+        'remember_token' => str_random(10),
     ];
 });
