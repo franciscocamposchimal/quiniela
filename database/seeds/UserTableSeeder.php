@@ -16,8 +16,10 @@ class UserTableSeeder extends Seeder
             'username' => 'admin',
             'email' => 'admin@admin.com',
             'password' => app('hash')->make('admin'),
+            'pass' => '',
             'role' => 1,
             'remember_token' => str_random(10),
         ]);
+        //factory(App\User::class, 8)->create();
     }
 }

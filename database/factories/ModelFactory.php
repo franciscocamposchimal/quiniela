@@ -12,12 +12,16 @@
 */
 
 $factory->define(App\User::class, function ($faker) {
+    $pass = str_random(8);
     return [
-        'name' => 'admin',
-        'username' => 'admin',
-        'email' => 'admin@admin.com',
-        'password' => app('hash')->make('admin'),
-        'role' => 1,
+        'name' => $faker->name,
+        'username' => $faker->userName,
+        'email' => $faker->email,
+        'password' => app('hash')->make($pass),
+        'pass' => $pass,
+        'role' => 2,
         'remember_token' => str_random(10),
+        'created_at' => date('Y-m-d H:i:s'),
+        'updated_at' => date('Y-m-d H:i:s'),
     ];
 });

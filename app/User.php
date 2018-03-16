@@ -59,4 +59,9 @@ class User extends Model implements
     {
         return [];
     }
+
+    public function quinelas()
+    {
+        return $this->hasMany('App\Quinela', 'id_user');
+    }
 }

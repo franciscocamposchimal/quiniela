@@ -19,6 +19,11 @@ $api->version('v1', function ($api) {
         'uses' => 'App\Http\Controllers\Auth\AuthController@postLogin',
     ]);
 
+    $api->get('/user/{id}/quinielas', [
+        'uses' => 'App\Http\Controllers\QuinelaController@getAll',
+        'as' => 'api.quinielas'
+    ]);
+
     $api->group([
         'middleware' => 'api.auth',
     ], function ($api) {

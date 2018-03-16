@@ -12,5 +12,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call('UserTableSeeder');
+        $this->call('GruposTableSeeder');
+        $this->call('EquiposTableSeeder');
+        $this->call('GpoDetalleTableSeeder');
+        $this->call('FasesTableSeeder');
+        $this->call('FasesDetalleTableSeeder');
+        $this->call('GruposTableSeeder'); 
+        $this->call('PartidosTableSeeder');
+        $this->call('QuinelasJugadorTableSeeder');
     }
 }
