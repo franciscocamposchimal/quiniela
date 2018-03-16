@@ -10,11 +10,17 @@ use App\User;
 class QuinelaController extends Controller
 {
     public function getAll($id){
-        $quinielasUser = User::with('quinelas.partido.equipoVisit.equipo','quinelas.partido.equipoVisit.grupo','quinelas.partido.equipoHome.equipo','quinelas.partido.equipoHome.grupo')->where('id', $id)->get();
+        $quinielasUser = User::with(['quinelas.partido.equipoVisit' => function ($query) {
+                                        $query->select(['id','id_equipo','id_gpo']);
+                                    }
+                                    ,'quinelas.partido.equipoVisit.equipo' 
+                                    ,'quinelas.partido.equipoVisit.grupo'
+                                    ,'quinelas.partido.equipoHome' => function ($query) {
+                                        $query->select(['id','id_equipo','id_gpo']);
+                                    }
+                                    ,'quinelas.partido.equipoHome.equipo'
+                                    ,'quinelas.partido.equipoHome.grupo'])->where('id', $id)->get(['id','name','username']);
 
-        /*$users = App\User::with(['posts' => function ($query) {
-            $query->where('title', 'like', '%first%');
-        }])->get();*/
         return response()->json(['quinielas_user'=>$quinielasUser],200);
     }
 }

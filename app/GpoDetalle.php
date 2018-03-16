@@ -9,6 +9,8 @@ class GpoDetalle extends Model
     protected $table = 'gpoDetalles';
 
     protected $hidden = [
+        'id_equipo',
+        'id_gpo',
         'created_at',
         'updated_at',
     ];
