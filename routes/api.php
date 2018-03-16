@@ -24,6 +24,11 @@ $api->version('v1', function ($api) {
         'as' => 'api.quinielas'
     ]);
 
+    $api->put('/user/{id}/quiniela/{id_quiniela}', [
+        'uses' => 'App\Http\Controllers\QuinelaController@putQuinela',
+        'as'=> 'api.quiniela'
+    ]);
+
     $api->group([
         'middleware' => 'api.auth',
     ], function ($api) {
