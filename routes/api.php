@@ -24,7 +24,7 @@ $api->version('v1', function ($api) {
         'as' => 'api.quinielas'
     ]);
 
-    $api->put('/user/{id}/quiniela/{id_quiniela}', [
+    $api->put('/user/{id}/quiniela/{id_partido}', [
         'uses' => 'App\Http\Controllers\QuinelaController@putQuinela',
         'as'=> 'api.quiniela'
     ]);

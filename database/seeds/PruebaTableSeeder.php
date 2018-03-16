@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\User;
 
 class PruebaTableSeeder extends Seeder
 {
@@ -11,16 +12,18 @@ class PruebaTableSeeder extends Seeder
      */
     public function run()
     {
-        $pruebas = App\User::find(1);
-        //echo $pruebas;
-        /*foreach ($pruebas->quinelas as $quinela) {
-            echo $quinela;
-        }*/
-        //echo $pruebas->quinelas;
-        //echo $pruebas->partido;
-        if($pruebas->name == 'admin'){
-            unset($pruebas['name']);
+        $id_partido = 2;
+        $id = 7;
+        $quinielaUser = User::with(['quinelas'=> function ($query) use ($id_partido){
+                            $query->where('id_partido', $id_partido);
+                        }])->where('id', $id)->get(['id']);
+        foreach ($quinielaUser as $item) {
+            if ($item['quinelas']){
+                foreach ($item['quinelas'] as $quin) {
+                     echo $quin['visit'];
+                }
+             
+            }
         }
-        echo $pruebas;
     }
 }

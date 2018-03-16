@@ -29,21 +29,17 @@ class QuinelaController extends Controller
         return response()->json(['quinielas_user'=>$quinielasUser],200);
     }
 
-    public function putQuinela(Request $request, $id, $id_quiniela)
+    public function putQuinela(Request $request, $id, $id_partido)
     {
-        /*$quinielaUser = Quinela::where(function($query) use ($id, $id_quiniela){
-            $query->where('id_user', $id)->where('id', $id_quiniela)->get();
-        });*/
-        /*if(count($quinielaUser) != 0){
-            $quinielaUserUpdated->home = $request['home'];
-            $quinielaUserUpdated->visit = $request['visit'];
-            $quinielaUserUpdated->empate = $request['empate'];
-            $quinielaUserUpdated.save();
-            return response()->json(['quiniela'=>$quinielaUserUpdated],200);
-        }else{
-            return response()->json(['error'=>'Error al encontrar'],200);
-        }*/
-        return response()->json(['qui'=>$quinielaUser, 'size'=>sizeof($quinielaUser)],200);
+        $quinielaUser = User::with(['quinelas'=> function ($query) use ($id_partido,$request){
+                            $query->where('id_partido', $id_partido)->update([
+                                            'home' => filter_var($request['home'], FILTER_VALIDATE_BOOLEAN),
+                                            'visit' => filter_var($request['visit'], FILTER_VALIDATE_BOOLEAN),
+                                            'empate' => filter_var($request['empate'], FILTER_VALIDATE_BOOLEAN),
+                                            ]);
+                        }])->where('id', $id)->get(['id']);
+
+        return response()->json(['partido'=>$quinielaUser],200);
     }
 
 }
