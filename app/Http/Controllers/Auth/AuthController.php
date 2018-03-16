@@ -80,6 +80,7 @@ class AuthController extends Controller
      */
     protected function onAuthorized($token)
     {
+       
         return new JsonResponse([
             'message' => 'token_generated',
             'data' => [
@@ -130,6 +131,13 @@ class AuthController extends Controller
             'data' => [
                 'token' => $newToken
             ]
+        ]);
+    }
+    public function getUserData()
+    {
+        return new JsonResponse([
+            'message' => 'authenticated_user',
+            'data' => JWTAuth::parseToken()->authenticate()
         ]);
     }
 

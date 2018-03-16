@@ -9,6 +9,8 @@ class FasesDetalle extends Model
     protected $table = 'fasesDetalles';
 
     protected $hidden = [
+        'id_fase',
+        'id_partido',
         'created_at',
         'updated_at',
     ];
