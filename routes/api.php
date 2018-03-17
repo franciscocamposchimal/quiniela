@@ -29,6 +29,16 @@ $api->version('v1', function ($api) {
         'as'=> 'api.quiniela'
     ]);
 
+    $api->get('/partidos', [
+        'uses' => 'App\Http\Controllers\PartidoController@getAllPartidos',
+        'as' => 'api.partidos'
+    ]);
+
+    $api->put('/partido/{id}', [
+        'uses' => 'App\Http\Controllers\PartidoController@putPartido',
+        'as' => 'api.partido'
+    ]);
+
     $api->group([
         'middleware' => 'api.auth',
     ], function ($api) {
