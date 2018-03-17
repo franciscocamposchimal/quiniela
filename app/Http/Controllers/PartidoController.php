@@ -30,8 +30,11 @@ class PartidoController extends Controller
 
     public function putPartido(Request $request, $id_partido)
     {
-        $partido = Partido::with(['faseDetalle','equipoHome','equipoVisit'])->where('id', $id_partido)->get();
+        $partido = Partido::with(['faseDetalle' => function ($query) use ($id_partido){
+            $query->select(['home']);
+        }])->where('id', $id_partido)->get();
 
         return response()->json(['partido'=>$partido],200);
+        //,'equipoHome','equipoVisit'
     }
 }

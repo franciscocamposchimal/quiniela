@@ -11,7 +11,7 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        /*DB::table('users')->insert([
             'name' => 'admin',
             'username' => 'admin',
             'email' => 'admin@admin.com',
@@ -19,7 +19,7 @@ class UserTableSeeder extends Seeder
             'pass' => '',
             'role' => 1,
             'remember_token' => str_random(10),
-        ]);
-        //factory(App\User::class, 8)->create();
+        ]);*/
+        factory(App\User::class, 8)->create();
     }
 }
