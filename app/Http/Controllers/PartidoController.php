@@ -14,8 +14,12 @@ class PartidoController extends Controller
     {
         $partidos = FasesDetalle::with(['fase' => function ($query){
             $query->select(['id', 'name']);
+        },'partido.equipoHome.grupo' =>function ($query){
+            $query->select(['id', 'name']);
         },'partido.equipoHome.equipo' => function ($query){
             $query->select(['id', 'name']);
+        },'partido.equipoVisit.grupo' => function ($query){
+            $query->select('id', 'name');
         },'partido.equipoVisit.equipo' => function ($query){
             $query->select(['id', 'name']);
         }
@@ -31,9 +35,7 @@ class PartidoController extends Controller
         }])->where('id', 1);*/
         $partido = FasesDetalle::select('home', 'visit', 'empate')->where('id', $id_partido)->get();
 
-        $grupo_detalle = FasesDetalle::with(['partido.equipoVisit' => function ($query){
-            $query->select(['pj', 'pg', 'e', 'pp', 'gf', 'gc', 'pts']);
-        }])->get();
+        $grupo_detalle = FasesDetalle::with(['partido.equipoVisit'])->get();
 
         return response()->json(['partido'=>$partido, 'grupo'=>$grupo_detalle],200);
     }
