@@ -14,8 +14,12 @@ class PartidoController extends Controller
     {
         $partidos = FasesDetalle::with(['fase' => function ($query){
             $query->select(['id', 'name']);
+        },'partido.equipoHome.grupo' =>function ($query){
+            $query->select(['id', 'name']);
         },'partido.equipoHome.equipo' => function ($query){
             $query->select(['id', 'name']);
+        },'partido.equipoVisit.grupo' => function ($query){
+            $query->select('id', 'name');
         },'partido.equipoVisit.equipo' => function ($query){
             $query->select(['id', 'name']);
         }
