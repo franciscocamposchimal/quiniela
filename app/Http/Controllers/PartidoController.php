@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 
 use App\FasesDetalle;
 use App\Partido;
+use App\GpoDetalle;
+use App\Quinela;
 
 class PartidoController extends Controller
 {
@@ -30,11 +32,67 @@ class PartidoController extends Controller
 
     public function putPartido(Request $request, $id_partido)
     {
-        $partido = Partido::with(['faseDetalle' => function ($query) use ($id_partido){
-            $query->select(['home']);
-        }])->where('id', $id_partido)->get();
+        $partido = Partido::find($id_partido);
+        $updateHome= GpoDetalle::where('id',$partido->equipoHome->id)->first();
+        $updateVisit= GpoDetalle::where('id',$partido->equipoVisit->id)->first();
+        //$UpdateQuinelas = Quinela::where('id_partido', $id_partido)->where('empate', true)->get();
+        $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $id_partido)->first();
 
-        return response()->json(['partido'=>$partido],200);
-        //,'equipoHome','equipoVisit'
+            if(intval($request['home']) > intval($request['visit'])){
+               
+                $updateHome->pj+=1;
+                $updateHome->pg+=1;
+                $updateHome->gf+= intval($request['home']);
+                $updateHome->gc+= intval($request['visit']);
+                $updateHome->pts+= 3;
+                $updateHome->save();
+
+                $updateVisit->pj+=1;
+                $updateVisit->pp+=1;
+                $updateVisit->gf+= intval($request['visit']);
+                $updateVisit->gc+= intval($request['home']);
+                $updateVisit->save();
+
+                $Updatepartido->home = true;
+                $Updatepartido->save();
+            }elseif(intval($request['home']) == intval($request['visit'])){
+
+                $updateHome->pj+=1;
+                $updateHome->e+=1;
+                $updateHome->gf+= intval($request['home']);
+                $updateHome->gc+= intval($request['visit']);
+                $updateHome->pts+= 1;
+                $updateHome->save();
+
+                $updateVisit->pj+=1;
+                $updateVisit->e+=1;
+                $updateVisit->gf+= intval($request['visit']);
+                $updateVisit->gc+= intval($request['home']);
+                $updateVisit->pts+= 1;
+                $updateVisit->save();
+
+                $Updatepartido->empate = true;
+                $Updatepartido->save();
+            }else{
+                $updateVisit->pj+=1;
+                $updateVisit->pg+=1;
+                $updateVisit->gf+= intval($request['visit']);
+                $updateVisit->gc+= intval($request['home']);
+                $updateVisit->pts+= 3;
+                $updateVisit->save();
+
+                $updateHome->pj+=1;
+                $updateHome->pp+=1;
+                $updateHome->gf+= intval($request['home']);
+                $updateHome->gc+= intval($request['visit']);
+                $updateHome->save();
+
+                $Updatepartido->visit = true;
+                $Updatepartido->save();
+            }
+        //$Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $id_partido)->first();
+
+
+        return response()->json(['partido'=>$UpdateQuinelas],200);
     }
 }
