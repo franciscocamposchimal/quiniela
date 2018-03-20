@@ -42,4 +42,12 @@ class QuinelaController extends Controller
         return response()->json(['partido'=>$quinielaUser],200);
     }
 
+
+    public function rankingQuinela()
+    {
+        //$quinielas = User::with(['quinelas'])->get();
+        $quinielas = Quinela::get();
+
+        return response()->json(['quinelas_win'=>$quinielas], 200);
+    }
 }

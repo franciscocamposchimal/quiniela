@@ -23,11 +23,11 @@ class GpoDetalle extends Model
     {
         return $this->belongsTo('App\Grupo', 'id_gpo');
     }
-    public function partidosHome()
+    public function partidoHome()
     {
         return $this->hasMany('App\Partido', 'id_gpodet_home');
     }
-    public function partidosVisit()
+    public function partidoVisit()
     {
         return $this->hasMany('App\Partido', 'id_gpodet_visit');
     }

@@ -29,6 +29,11 @@ $api->version('v1', function ($api) {
         'as'=> 'api.quiniela'
     ]);
 
+    $api->get('/quinielas/ranking', [
+        'uses' => 'App\Http\Controllers\QuinelaController@rankingQuinela',
+        'as' => 'api.ranking'
+    ]);
+
     $api->get('/partidos', [
         'uses' => 'App\Http\Controllers\PartidoController@getAllPartidos',
         'as' => 'api.partidos'
