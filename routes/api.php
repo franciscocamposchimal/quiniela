@@ -19,37 +19,32 @@ $api->version('v1', function ($api) {
         'uses' => 'App\Http\Controllers\Auth\AuthController@postLogin',
     ]);
 
-    $api->get('/user/{id}/quinielas', [
-        'uses' => 'App\Http\Controllers\QuinelaController@getAll',
-        'as' => 'api.quinielas'
-    ]);
-
-    $api->put('/user/{id}/quiniela/{id_partido}', [
-        'uses' => 'App\Http\Controllers\QuinelaController@putQuinela',
-        'as'=> 'api.quiniela'
-    ]);
-
-    $api->get('/quinielas/ranking', [
-        'uses' => 'App\Http\Controllers\QuinelaController@rankingQuinela',
-        'as' => 'api.ranking'
-    ]);
-
-    $api->get('/partidos', [
-        'uses' => 'App\Http\Controllers\PartidoController@getAllPartidos',
-        'as' => 'api.partidos'
-    ]);
-
-    $api->put('/partido/{id}', [
-        'uses' => 'App\Http\Controllers\PartidoController@putPartido',
-        'as' => 'api.partido'
-    ]);
-
     $api->group([
         'middleware' => 'api.auth',
     ], function ($api) {
         $api->get('/', [
             'uses' => 'App\Http\Controllers\APIController@getIndex',
             'as' => 'api.index'
+        ]);
+        $api->get('/user/{id}/quinielas', [
+            'uses' => 'App\Http\Controllers\QuinelaController@getAll',
+            'as' => 'api.quinielas'
+        ]);
+        $api->put('/user/{id}/quiniela/{id_partido}', [
+            'uses' => 'App\Http\Controllers\QuinelaController@putQuinela',
+            'as'=> 'api.quiniela'
+        ]);
+        $api->get('/quinielas/ranking', [
+            'uses' => 'App\Http\Controllers\QuinelaController@rankingQuinela',
+            'as' => 'api.ranking'
+        ]);
+        $api->get('/partidos', [
+            'uses' => 'App\Http\Controllers\PartidoController@getAllPartidos',
+            'as' => 'api.partidos'
+        ]);
+        $api->put('/partido/{id}', [
+            'uses' => 'App\Http\Controllers\PartidoController@putPartido',
+            'as' => 'api.partido'
         ]);
         $api->get('/user/{id}', [
             'uses' => 'App\Http\Controllers\Auth\AuthController@getUser',
