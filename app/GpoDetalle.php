@@ -8,6 +8,16 @@ class GpoDetalle extends Model
 {
     protected $table = 'gpoDetalles';
 
+    protected $fillable = [
+        'pj',
+        'pg',
+        'e',
+        'pp',
+        'gf',
+        'gc',
+        'pts',
+    ];
+
     protected $hidden = [
         'id_equipo',
         'id_gpo',

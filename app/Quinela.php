@@ -8,6 +8,13 @@ class Quinela extends Model
 {
     protected $table = 'quinelas';
 
+    protected $fillable = [
+        'home',
+        'visit',
+        'empate',
+        'win',
+    ];
+
     protected $hidden = [
         'id_user',
         'id_partido',

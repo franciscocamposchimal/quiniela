@@ -8,6 +8,12 @@ class FasesDetalle extends Model
 {
     protected $table = 'fasesDetalles';
 
+    protected $fillable = [
+        'home',
+        'visit',
+        'empate',
+    ];
+
     protected $hidden = [
         'id_fase',
         'id_partido',
