@@ -35,11 +35,10 @@ class PartidoController extends Controller
         $partido = Partido::find($id_partido);
         $updateHome= GpoDetalle::where('id',$partido->equipoHome->id)->first();
         $updateVisit= GpoDetalle::where('id',$partido->equipoVisit->id)->first();
-        //$UpdateQuinelas = Quinela::where('id_partido', $id_partido)->where('empate', true)->get();
         $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $id_partido)->first();
 
-            if(intval($request['home']) > intval($request['visit'])){
-               
+           if(intval($request['home']) > intval($request['visit'])){
+                //$perro = "home";
                 $updateHome->pj+=1;
                 $updateHome->pg+=1;
                 $updateHome->gf+= intval($request['home']);
@@ -55,17 +54,25 @@ class PartidoController extends Controller
 
                 $Updatepartido->home = true;
                 $Updatepartido->save();
-            }elseif(intval($request['home']) == intval($request['visit'])){
 
-                $updateHome->pj+=1;
-                $updateHome->e+=1;
+                $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('home', true)->get();
+                foreach ($UpdateQuinelas as $quinela) {
+                    $quinela->win = true;
+                    $quinela->save();
+                }
+
+            }elseif(intval($request['home']) == intval($request['visit'])){
+                //$perro = "empate";
+
+                $updateHome->pj+= 1;
+                $updateHome->e+= 1;
                 $updateHome->gf+= intval($request['home']);
                 $updateHome->gc+= intval($request['visit']);
                 $updateHome->pts+= 1;
                 $updateHome->save();
 
-                $updateVisit->pj+=1;
-                $updateVisit->e+=1;
+                $updateVisit->pj+= 1;
+                $updateVisit->e+= 1;
                 $updateVisit->gf+= intval($request['visit']);
                 $updateVisit->gc+= intval($request['home']);
                 $updateVisit->pts+= 1;
@@ -73,7 +80,15 @@ class PartidoController extends Controller
 
                 $Updatepartido->empate = true;
                 $Updatepartido->save();
+
+                $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('empate', true)->get();
+                foreach ($UpdateQuinelas as $quinela) {
+                    $quinela->win = true;
+                    $quinela->save();
+                }
+
             }else{
+                //$perro = "visit";
                 $updateVisit->pj+=1;
                 $updateVisit->pg+=1;
                 $updateVisit->gf+= intval($request['visit']);
@@ -89,10 +104,14 @@ class PartidoController extends Controller
 
                 $Updatepartido->visit = true;
                 $Updatepartido->save();
+
+                $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('visit', true)->get();
+                foreach ($UpdateQuinelas as $quinela) {
+                    $quinela->win = true;
+                    $quinela->save();
+                }
             }
-        //$Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $id_partido)->first();
 
-
-        return response()->json(['partido'=>$UpdateQuinelas],200);
+        return response()->json(['partido'=>$Updatepartido],200);
     }
 }
