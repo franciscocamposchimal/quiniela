@@ -29,6 +29,7 @@ class AuthController extends Controller
                 'username' => 'required',
                 'password' => 'required',
             ]);
+            $user = User::where('username', $request->username)->select(['id', 'name', 'email'])->first();
         } catch (ValidationException $e) {
             return $e->getResponse();
         }
@@ -46,7 +47,7 @@ class AuthController extends Controller
         }
 
         // All good so return the token
-        return $this->onAuthorized($token);
+        return $this->onAuthorized($token, $user);
     }
 
     /**
@@ -78,11 +79,12 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    protected function onAuthorized($token)
+    protected function onAuthorized($token, $user)
     {
        
         return new JsonResponse([
             'message' => 'token_generated',
+            'user' => $user,
             'data' => [
                 'token' => $token,
             ]
