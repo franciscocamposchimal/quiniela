@@ -45,9 +45,10 @@ class QuinelaController extends Controller
 
     public function rankingQuinela()
     {
-        //$quinielas = User::with(['quinelas'])->get();
-        $quinielas = Quinela::get();
+        $quinielas = User::withCount(['quinelas' => function ($query){
+            $query->where('win',1);
+        }])->orderBy('quinelas_count', 'desc')->take(10)->get();
 
-        return response()->json(['quinelas_win'=>$quinielas], 200);
+        return response()->json(['users'=>$quinielas], 200);
     }
 }
