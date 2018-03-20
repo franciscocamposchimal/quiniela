@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\Quinela;
 
 class PruebaTableSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class PruebaTableSeeder extends Seeder
     public function run()
     {
         $id_partido = 2;
-        $id = 7;
+       /* $id = 7;
         $quinielaUser = User::with(['quinelas'=> function ($query) use ($id_partido){
                             $query->where('id_partido', $id_partido);
                         }])->where('id', $id)->get(['id']);
@@ -24,6 +25,12 @@ class PruebaTableSeeder extends Seeder
                 }
              
             }
+        }*/
+        $UpdateQuinelas = Quinela::where('id_partido', $id_partido)->where('visit', true)->get();
+        foreach ($UpdateQuinelas as $quinela) {
+            //$quinela->win = true;
+            //$quinela->save();
+            echo $quinela;
         }
     }
 }
