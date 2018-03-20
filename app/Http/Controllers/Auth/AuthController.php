@@ -29,7 +29,7 @@ class AuthController extends Controller
                 'username' => 'required',
                 'password' => 'required',
             ]);
-            $user = User::where('username', $request->username)->select(['id', 'name', 'email'])->first();
+            $user = User::where('username', $request->username)->select(['id', 'name', 'username', 'email'])->first();
         } catch (ValidationException $e) {
             return $e->getResponse();
         }
