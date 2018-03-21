@@ -13,6 +13,7 @@ use Illuminate\Http\Exception\HttpResponseException;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Partido;
+use App\Quinela;
 
 class AuthController extends Controller
 {
@@ -185,7 +186,7 @@ class AuthController extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         if($user->role == 1){
-            //$partidos = Partido::all();
+            $partidos = Partido::all();
 
             $pass = str_random(8);
             $newUser = new User();
@@ -193,31 +194,25 @@ class AuthController extends Controller
             $newUser->username = $request['username'];
             $newUser->email = $request['email'];
             $newUser->password = Hash::make($pass);
+            $newUser->pass = $pass;
             $newUser->role = 2;
             $newUser->remember_token = str_random(10);
             $newUser->save();
             foreach($partidos as $partido){
-                DB::table('quinelas')->insert(['home'=>false, 'visit'=>false, 'empate'=>false,'id_user'=>$newUser->id]);
+                $quinela = Quinela::insert([
+                    'home'=>false, 
+                    'visit'=>false, 
+                    'empate'=>false,
+                    'id_user'=>$newUser->id, 
+                    'id_partido'=>$partido->id,
+                    'created_at'=>date('Y-m-d H:i:s'),
+                    'updated_at'=>date('Y-m-d H:i:s')]);
             }
             return response()->json(['user'=>$newUser,'password'=>$pass],201);
         }else{
             return response()->json(['error'=>'Unauthorized'],401);
         }
     }
-   /* $users = App\User::orderBy('id', 'desc')->take(8)->get();
-        $partidos = App\Partido::all();
-        foreach ($users as $user) {
-            foreach ($partidos as $partido) {
-                DB::table('quinelas')->insert([
-                    'home'=>false,
-                    'visit'=>false,
-                    'empate'=>false,
-                    'id_user'=>$user->id,
-                    'id_partido'=>$partido->id,
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s'),
-                ]);   
-            }*/
     /**
      * Update user.
      *
@@ -269,7 +264,7 @@ class AuthController extends Controller
         }
         if($user->role == 1 && $user->name != $userDeleted->name){
             $userDeleted->delete();
-            return response()->json(['user'=>$userDeleted],20);
+            return response()->json(['user'=>$userDeleted],200);
         }else{
             return response()->json(['error'=>'Unauthorized'],401);
         }
