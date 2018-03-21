@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 use App\User;
 use App\Quinela;
@@ -31,28 +33,33 @@ class QuinelaController extends Controller
 
     public function putQuinelas(Request $request, $id)
     {
-        $quinielas = json_decode(json_encode($request['quinielas'],true));
-        foreach ($quinielas as $quiniela) {
-            
-            User::with(['quinelas'=> function ($query) use ($quiniela){
-                $query->where('id_partido', $quiniela->id_partido)->update([
-                                'home' => filter_var($quiniela->home, FILTER_VALIDATE_BOOLEAN),
-                                'visit' => filter_var($quiniela->visit, FILTER_VALIDATE_BOOLEAN),
-                                'empate' => filter_var($quiniela->empate, FILTER_VALIDATE_BOOLEAN),
-                                ]);
-            }])->where('id', $id)->get(['id']);
+        $user = JWTAuth::parseToken()->authenticate();
+        if($user->role == 2){
+            $quinielas = json_decode(json_encode($request['quinielas'],true));
+            foreach ($quinielas as $quiniela) {
+                
+                User::with(['quinelas'=> function ($query) use ($quiniela){
+                    $query->where('id_partido', $quiniela->id_partido)->update([
+                                    'home' => filter_var($quiniela->home, FILTER_VALIDATE_BOOLEAN),
+                                    'visit' => filter_var($quiniela->visit, FILTER_VALIDATE_BOOLEAN),
+                                    'empate' => filter_var($quiniela->empate, FILTER_VALIDATE_BOOLEAN),
+                                    ]);
+                }])->where('id', $id)->get(['id']);
+            }
+            /*$quinielaUser = User::with(['quinelas'=> function ($query) use ($id_partido,$request){
+                                $query->where('id_partido', $id_partido)->update([
+                                                'home' => filter_var($request['home'], FILTER_VALIDATE_BOOLEAN),
+                                                'visit' => filter_var($request['visit'], FILTER_VALIDATE_BOOLEAN),
+                                                'empate' => filter_var($request['empate'], FILTER_VALIDATE_BOOLEAN),
+                                                ]);
+                            }])->where('id', $id)->get(['id']);*/
+
+            $quinielasUser = User::with('quinelas')->where('id', $id)->get(['id']);
+
+            return response()->json(['partido'=>$quinielasUser],200);
+        }else{
+            return response()->json(['error'=>'Unauthorized'],401);
         }
-        /*$quinielaUser = User::with(['quinelas'=> function ($query) use ($id_partido,$request){
-                            $query->where('id_partido', $id_partido)->update([
-                                            'home' => filter_var($request['home'], FILTER_VALIDATE_BOOLEAN),
-                                            'visit' => filter_var($request['visit'], FILTER_VALIDATE_BOOLEAN),
-                                            'empate' => filter_var($request['empate'], FILTER_VALIDATE_BOOLEAN),
-                                            ]);
-                        }])->where('id', $id)->get(['id']);*/
-
-        $quinielasUser = User::with('quinelas')->where('id', $id)->get(['id']);
-
-        return response()->json(['partido'=>$quinielasUser],200);
     }
 
 

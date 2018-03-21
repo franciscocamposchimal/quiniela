@@ -19,10 +19,6 @@ $api->version('v1', function ($api) {
         'uses' => 'App\Http\Controllers\Auth\AuthController@postLogin',
     ]);
 
-    $api->put('/user/{id}/quinielas', [
-        'uses' => 'App\Http\Controllers\QuinelaController@putQuinelas',
-        'as'=> 'api.quiniela'
-    ]);
 
     $api->group([
         'middleware' => 'api.auth',
@@ -35,7 +31,11 @@ $api->version('v1', function ($api) {
             'uses' => 'App\Http\Controllers\QuinelaController@getAll',
             'as' => 'api.quinielas'
         ]);
-
+        
+        $api->put('/user/{id}/quinielas', [
+            'uses' => 'App\Http\Controllers\QuinelaController@putQuinelas',
+            'as'=> 'api.quiniela'
+        ]);
         $api->get('/quinielas/ranking', [
             'uses' => 'App\Http\Controllers\QuinelaController@rankingQuinela',
             'as' => 'api.ranking'
