@@ -29,17 +29,30 @@ class QuinelaController extends Controller
         return response()->json(['quinielas_user'=>$quinielasUser],200);
     }
 
-    public function putQuinela(Request $request, $id, $id_partido)
+    public function putQuinelas(Request $request, $id)
     {
-        $quinielaUser = User::with(['quinelas'=> function ($query) use ($id_partido,$request){
+        $quinielas = json_decode(json_encode($request['quinielas'],true));
+        foreach ($quinielas as $quiniela) {
+            
+            User::with(['quinelas'=> function ($query) use ($quiniela){
+                $query->where('id_partido', $quiniela->id_partido)->update([
+                                'home' => filter_var($quiniela->home, FILTER_VALIDATE_BOOLEAN),
+                                'visit' => filter_var($quiniela->visit, FILTER_VALIDATE_BOOLEAN),
+                                'empate' => filter_var($quiniela->empate, FILTER_VALIDATE_BOOLEAN),
+                                ]);
+            }])->where('id', $id)->get(['id']);
+        }
+        /*$quinielaUser = User::with(['quinelas'=> function ($query) use ($id_partido,$request){
                             $query->where('id_partido', $id_partido)->update([
                                             'home' => filter_var($request['home'], FILTER_VALIDATE_BOOLEAN),
                                             'visit' => filter_var($request['visit'], FILTER_VALIDATE_BOOLEAN),
                                             'empate' => filter_var($request['empate'], FILTER_VALIDATE_BOOLEAN),
                                             ]);
-                        }])->where('id', $id)->get(['id']);
+                        }])->where('id', $id)->get(['id']);*/
 
-        return response()->json(['partido'=>$quinielaUser],200);
+        $quinielasUser = User::with('quinelas')->where('id', $id)->get(['id']);
+
+        return response()->json(['partido'=>$quinielasUser],200);
     }
 
 
