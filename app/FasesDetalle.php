@@ -12,6 +12,8 @@ class FasesDetalle extends Model
         'home',
         'visit',
         'empate',
+        'goles_home',
+        'goles_visit',
     ];
 
     protected $hidden = [

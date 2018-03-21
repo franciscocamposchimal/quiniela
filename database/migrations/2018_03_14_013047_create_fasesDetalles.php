@@ -15,9 +15,11 @@ class CreateFasesDetalles extends Migration
     {
         Schema::create('fasesDetalles', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('home');
-            $table->boolean('visit');
-            $table->boolean('empate');
+            $table->boolean('home')->default(false);
+            $table->boolean('visit')->default(false);
+            $table->boolean('empate')->default(false);
+            $table->integer('goles_home')->default(0);
+            $table->integer('goles_visit')->default(0);
             $table->integer('id_fase')->unsigned();
             $table->integer('id_partido')->unsigned();
             $table->foreign('id_fase')

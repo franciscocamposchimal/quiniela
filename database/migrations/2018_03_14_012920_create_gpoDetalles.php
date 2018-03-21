@@ -15,13 +15,13 @@ class CreateGpoDetalles extends Migration
     {
         Schema::create('gpoDetalles', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('pj');
-            $table->integer('pg');
-            $table->integer('e');
-            $table->integer('pp');
-            $table->integer('gf');
-            $table->integer('gc');
-            $table->integer('pts');
+            $table->integer('pj')->default(0);
+            $table->integer('pg')->default(0);
+            $table->integer('e')->default(0);
+            $table->integer('pp')->default(0);
+            $table->integer('gf')->default(0);
+            $table->integer('gc')->default(0);
+            $table->integer('pts')->default(0);
             $table->integer('id_gpo')->unsigned();
             $table->integer('id_equipo')->unsigned();
             $table->foreign('id_gpo')

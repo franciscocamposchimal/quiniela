@@ -60,6 +60,8 @@ class PartidoController extends Controller
                     $updateVisit->save();
 
                     $Updatepartido->home = true;
+                    $Updatepartido->goles_home = intval($request['home']);
+                    $Updatepartido->goles_visit = intval($request['visit']);
                     $Updatepartido->save();
 
                     $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('home', true)->get();
@@ -86,6 +88,8 @@ class PartidoController extends Controller
                     $updateVisit->save();
 
                     $Updatepartido->empate = true;
+                    $Updatepartido->goles_home = intval($request['home']);
+                    $Updatepartido->goles_visit = intval($request['visit']);
                     $Updatepartido->save();
 
                     $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('empate', true)->get();
@@ -110,6 +114,8 @@ class PartidoController extends Controller
                     $updateHome->save();
 
                     $Updatepartido->visit = true;
+                    $Updatepartido->goles_home = intval($request['home']);
+                    $Updatepartido->goles_visit = intval($request['visit']);
                     $Updatepartido->save();
 
                     $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('visit', true)->get();
