@@ -12,6 +12,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Exception\HttpResponseException;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\Partido;
 
 class AuthController extends Controller
 {
@@ -184,6 +185,8 @@ class AuthController extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         if($user->role == 1){
+            //$partidos = Partido::all();
+
             $pass = str_random(8);
             $newUser = new User();
             $newUser->name = $request['name'];
@@ -198,6 +201,20 @@ class AuthController extends Controller
             return response()->json(['error'=>'Unauthorized'],401);
         }
     }
+   /* $users = App\User::orderBy('id', 'desc')->take(8)->get();
+        $partidos = App\Partido::all();
+        foreach ($users as $user) {
+            foreach ($partidos as $partido) {
+                DB::table('quinelas')->insert([
+                    'home'=>false,
+                    'visit'=>false,
+                    'empate'=>false,
+                    'id_user'=>$user->id,
+                    'id_partido'=>$partido->id,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);   
+            }*/
     /**
      * Update user.
      *
