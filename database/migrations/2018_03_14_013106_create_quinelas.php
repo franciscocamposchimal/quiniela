@@ -15,9 +15,9 @@ class CreateQuinelas extends Migration
     {
         Schema::create('quinelas', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('home');
-            $table->boolean('visit');
-            $table->boolean('empate');
+            $table->boolean('home')->default(false);
+            $table->boolean('visit')->default(false);
+            $table->boolean('empate')->default(false);
             $table->boolean('win');
             $table->integer('id_user')->unsigned();
             $table->integer('id_partido')->unsigned();
