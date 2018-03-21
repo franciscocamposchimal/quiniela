@@ -41,7 +41,6 @@ class PartidoController extends Controller
             $updateHome= GpoDetalle::where('id',$partido->equipoHome->id)->first();
             $updateVisit= GpoDetalle::where('id',$partido->equipoVisit->id)->first();
             $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $id_partido)->first();
-            //$UpdateQuinela = 
             //Ir por la quiniela y actualizar su valor win
             //Conseguir todos los win y hacerles order by y cortar a los 10 con limit
 
