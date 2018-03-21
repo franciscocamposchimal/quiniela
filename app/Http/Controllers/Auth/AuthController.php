@@ -196,6 +196,9 @@ class AuthController extends Controller
             $newUser->role = 2;
             $newUser->remember_token = str_random(10);
             $newUser->save();
+            foreach($partidos as $partido){
+                DB::table('quinelas')->insert(['home'=>false, 'visit'=>false, 'empate'=>false,'id_user'=>$newUser->id]);
+            }
             return response()->json(['user'=>$newUser,'password'=>$pass],201);
         }else{
             return response()->json(['error'=>'Unauthorized'],401);
