@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 use App\FasesDetalle;
 use App\Partido;
@@ -33,9 +35,6 @@ class PartidoController extends Controller
 
     public function putPartido(Request $request, $id_partido)
     {
-        $user = User::where('role', 1)->get(['role']);
-        /*if($user->role == 1)
-        {
         $partido = Partido::find($id_partido);
         $updateHome= GpoDetalle::where('id',$partido->equipoHome->id)->first();
         $updateVisit= GpoDetalle::where('id',$partido->equipoVisit->id)->first();
@@ -119,9 +118,5 @@ class PartidoController extends Controller
                 }
             }
             return response()->json(['partido'=>$Updatepartido],200);
-        }else{
-            return response()->json(['error'=>'Unathorized'],200);
-        }*/
-        return response()->json(['partido'=>$user],200);
     }
 }
