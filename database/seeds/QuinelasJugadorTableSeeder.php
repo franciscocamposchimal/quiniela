@@ -11,7 +11,7 @@ class QuinelasJugadorTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = App\User::orderBy('id', 'desc')->take(8)->get();
+        $users = App\User::orderBy('id', 'desc')->take(6)->get();
         $partidos = App\Partido::all();
         foreach ($users as $user) {
             foreach ($partidos as $partido) {
