@@ -37,94 +37,372 @@ class PartidoController extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         if($user->role == 1){
-            $partido = Partido::find($id_partido);
-            $updateHome= GpoDetalle::where('id',$partido->equipoHome->id)->first();
-            $updateVisit= GpoDetalle::where('id',$partido->equipoVisit->id)->first();
-            $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $id_partido)->first();
-            //Ir por la quiniela y actualizar su valor win
-            //Conseguir todos los win y hacerles order by y cortar a los 10 con limit
+            if($request['played'] == true){
+                $partido = Partido::find($id_partido);
+                $updateHome= GpoDetalle::where('id',$partido->equipoHome->id)->first();
+                $updateVisit= GpoDetalle::where('id',$partido->equipoVisit->id)->first();
+                $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $id_partido)->first();
+                //Ir por la quiniela y actualizar su valor win
+                //Conseguir todos los win y hacerles order by y cortar a los 10 con limit
 
-            if(intval($request['home']) > intval($request['visit'])){
-                    //$perro = "home";
-                    $updateHome->pj+=1;
-                    $updateHome->pg+=1;
-                    $updateHome->gf+= intval($request['home']);
-                    $updateHome->gc+= intval($request['visit']);
-                    $updateHome->pts+= 3;
-                    $updateHome->save();
+                if(intval($request['home']) > intval($request['visit'])){
+                        //$perro = "home";
+                        $updateHome->pj+=1;
+                        $updateHome->pg+=1;
+                        $updateHome->gf+= intval($request['home']);
+                        $updateHome->gc+= intval($request['visit']);
+                        $updateHome->pts+= 3;
+                        $updateHome->save();
 
-                    $updateVisit->pj+=1;
-                    $updateVisit->pp+=1;
-                    $updateVisit->gf+= intval($request['visit']);
-                    $updateVisit->gc+= intval($request['home']);
-                    $updateVisit->save();
+                        $updateVisit->pj+=1;
+                        $updateVisit->pp+=1;
+                        $updateVisit->gf+= intval($request['visit']);
+                        $updateVisit->gc+= intval($request['home']);
+                        $updateVisit->save();
 
-                    $Updatepartido->home = true;
-                    $Updatepartido->goles_home = intval($request['home']);
-                    $Updatepartido->goles_visit = intval($request['visit']);
-                    $Updatepartido->save();
+                        $Updatepartido->home = true;
+                        $Updatepartido->goles_home = intval($request['home']);
+                        $Updatepartido->goles_visit = intval($request['visit']);
+                        $Updatepartido->save();
 
-                    $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('home', true)->get();
-                    foreach ($UpdateQuinelas as $quinela) {
-                        $quinela->win = true;
-                        $quinela->save();
+                        $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('home', true)->get();
+                        foreach ($UpdateQuinelas as $quinela) {
+                            $quinela->win = true;
+                            $quinela->save();
+                        }
+
+                    }elseif(intval($request['home']) == intval($request['visit'])){
+                        //$perro = "empate";
+
+                        $updateHome->pj+= 1;
+                        $updateHome->e+= 1;
+                        $updateHome->gf+= intval($request['home']);
+                        $updateHome->gc+= intval($request['visit']);
+                        $updateHome->pts+= 1;
+                        $updateHome->save();
+
+                        $updateVisit->pj+= 1;
+                        $updateVisit->e+= 1;
+                        $updateVisit->gf+= intval($request['visit']);
+                        $updateVisit->gc+= intval($request['home']);
+                        $updateVisit->pts+= 1;
+                        $updateVisit->save();
+
+                        $Updatepartido->empate = true;
+                        $Updatepartido->goles_home = intval($request['home']);
+                        $Updatepartido->goles_visit = intval($request['visit']);
+                        $Updatepartido->save();
+
+                        $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('empate', true)->get();
+                        foreach ($UpdateQuinelas as $quinela) {
+                            $quinela->win = true;
+                            $quinela->save();
+                        }
+
+                    }else{
+                        //$perro = "visit";
+                        $updateVisit->pj+=1;
+                        $updateVisit->pg+=1;
+                        $updateVisit->gf+= intval($request['visit']);
+                        $updateVisit->gc+= intval($request['home']);
+                        $updateVisit->pts+= 3;
+                        $updateVisit->save();
+
+                        $updateHome->pj+=1;
+                        $updateHome->pp+=1;
+                        $updateHome->gf+= intval($request['home']);
+                        $updateHome->gc+= intval($request['visit']);
+                        $updateHome->save();
+
+                        $Updatepartido->visit = true;
+                        $Updatepartido->goles_home = intval($request['home']);
+                        $Updatepartido->goles_visit = intval($request['visit']);
+                        $Updatepartido->save();
+
+                        $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('visit', true)->get();
+                        foreach ($UpdateQuinelas as $quinela) {
+                            $quinela->win = true;
+                            $quinela->save();
+                        }
+                    }
+                    return response()->json(['partido'=>$Updatepartido],200);
+            }elseif($request['played'] == false){
+                $partido = Partido::find($id_partido);
+                $updateHome= GpoDetalle::where('id',$partido->equipoHome->id)->first();
+                $updateVisit= GpoDetalle::where('id',$partido->equipoVisit->id)->first();
+                $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $id_partido)->first();
+                //Ir por la quiniela y actualizar su valor win
+                //Conseguir todos los win y hacerles order by y cortar a los 10 con limit
+                
+                if(($Updatepartido->goles_home != $request['home']) || ($Updatepartido->goles_visit != $request['visit'])){
+                    //Home es mayor a Visit
+                    if((intval($request['home']) > intval($request['visit']))){
+                        if($Updatepartido->home > $Updatepartido->visit){
+                            //$updateHome->pj+=1;
+                            //$updateHome->pg+=1;
+                            $updateHome->gf= intval($request['home']);
+                            $updateHome->gc= intval($request['visit']);
+                            //$updateHome->pts+= 3;
+                            $updateHome->save();
+
+                            //$updateVisit->pj+=1;
+                            //$updateVisit->pp+=1;
+                            $updateVisit->gf= intval($request['visit']);
+                            $updateVisit->gc= intval($request['home']);
+                            //$updateVisit->pts;
+                            $updateVisit->save();
+
+                            $Updatepartido->home = true;
+                            $Updatepartido->goles_home = intval($request['home']);
+                            $Updatepartido->goles_visit = intval($request['visit']);
+                            $Updatepartido->save();
+
+                            $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('home', true)->get();
+                            foreach ($UpdateQuinelas as $quinela) {
+                                $quinela->win = true;
+                                $quinela->save();
+                            }
+                        }elseif($Updatepartido->home < $Updatepartido->visit){
+                            //$updateHome->pj+=1;
+                            $updateHome->pg+=1;
+                            $updateHome->gf= intval($request['home']);
+                            $updateHome->gc= intval($request['visit']);
+                            $Updatepartido->pp-=1;
+                            $updateHome->pts+= 3;
+                            $updateHome->save();
+
+                            //$updateVisit->pj+=1;
+                            $updateHome->pg-=1;
+                            $updateVisit->pp+=1;
+                            $updateVisit->gf= intval($request['visit']);
+                            $updateVisit->gc= intval($request['home']);
+                            $updateVisit->pts-=3;
+                            $updateVisit->save();
+
+                            $Updatepartido->home = true;
+                            $Updatepartido->goles_home = intval($request['home']);
+                            $Updatepartido->goles_visit = intval($request['visit']);
+                            $Updatepartido->save();
+
+                            $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('home', true)->get();
+                            foreach ($UpdateQuinelas as $quinela) {
+                                $quinela->win = true;
+                                $quinela->save();
+                            }
+                        }elseif($Updatepartido->home = $Updatepartido->visit){
+                            //$updateHome->pj+=1;
+                            $updateHome->pg+=1;
+                            $updateHome->e-= 1;
+                            $updateHome->gf= intval($request['home']);
+                            $updateHome->gc= intval($request['visit']);
+                            //$Updatepartido->pp-=1;
+                            $updateHome->pts+= 2;
+                            $updateHome->save();
+
+                            //$updateVisit->pj+=1;
+                            //$updateHome->pg-=1;
+                            $updateVisit->pp+=1;
+                            $updateHome->e-= 1;
+                            $updateVisit->gf= intval($request['visit']);
+                            $updateVisit->gc= intval($request['home']);
+                            $updateVisit->pts-=1;
+                            $updateVisit->save();
+
+                            $Updatepartido->home = true;
+                            $Updatepartido->goles_home = intval($request['home']);
+                            $Updatepartido->goles_visit = intval($request['visit']);
+                            $Updatepartido->save();
+
+                            $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('home', true)->get();
+                            foreach ($UpdateQuinelas as $quinela) {
+                                $quinela->win = true;
+                                $quinela->save();
+                            }
+                        }
+                        
+                    }
+                    //Empate de valores
+                    elseif(intval($request['home']) == intval($request['visit'])){
+                        if($Updatepartido->home > $Updatepartido->visit){
+                             //$updateHome->pj+= 1;
+                            $updateHome->e+= 1;
+                            $updateHome->gf= intval($request['home']);
+                            $updateHome->gc= intval($request['visit']);
+                            $updateHome->pts-= 2;
+                            $updateHome->pg-= 1;
+                            //$updateVisit->pp-= 1;
+                            $updateHome->save();
+
+                            //$updateVisit->pj+= 1;
+                            $updateVisit->e+= 1;
+                            $updateVisit->gf= intval($request['visit']);
+                            $updateVisit->gc= intval($request['home']);
+                            $updateVisit->pts+= 1;
+                            //$updateHome->pg-= 1;
+                            $updateVisit->pp-= 1;
+                            $updateVisit->save();
+
+                            $Updatepartido->empate = true;
+                            $Updatepartido->goles_home = intval($request['home']);
+                            $Updatepartido->goles_visit = intval($request['visit']);
+                            $Updatepartido->save();
+
+                            $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('empate', true)->get();
+                            foreach ($UpdateQuinelas as $quinela) {
+                                $quinela->win = true;
+                                $quinela->save();
+                            }
+                        }elseif($Updatepartido->home < $Updatepartido->visit){
+                            //$updateHome->pj+= 1;
+                            $updateHome->e+= 1;
+                            $updateHome->gf= intval($request['home']);
+                            $updateHome->gc= intval($request['visit']);
+                            $updateHome->pts+= 1;
+                            //$updateHome->pg-= 1;
+                            $updateVisit->pp-= 1;
+                            $updateHome->save();
+
+                            //$updateVisit->pj+= 1;
+                            $updateVisit->e+= 1;
+                            $updateVisit->gf= intval($request['visit']);
+                            $updateVisit->gc= intval($request['home']);
+                            $updateVisit->pts-= 2;
+                            $updateHome->pg-= 1;
+                            //$updateVisit->pp-= 1;
+                            $updateVisit->save();
+
+                            $Updatepartido->empate = true;
+                            $Updatepartido->goles_home = intval($request['home']);
+                            $Updatepartido->goles_visit = intval($request['visit']);
+                            $Updatepartido->save();
+
+                            $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('empate', true)->get();
+                            foreach ($UpdateQuinelas as $quinela) {
+                                $quinela->win = true;
+                                $quinela->save();
+                            }
+                        }elseif($Updatepartido->home == $Updatepartido->visit){
+                            //$updateHome->pj+= 1;
+                            //$updateHome->e+= 1;
+                            $updateHome->gf= intval($request['home']);
+                            $updateHome->gc= intval($request['visit']);
+                            //$updateHome->pts+= 1;
+                            //$updateHome->pg-= 1;
+                            //$updateVisit->pp-= 1;
+                            $updateHome->save();
+
+                            //$updateVisit->pj+= 1;
+                            //$updateVisit->e+= 1;
+                            $updateVisit->gf= intval($request['visit']);
+                            $updateVisit->gc= intval($request['home']);
+                            //$updateVisit->pts-= 2;
+                            //$updateHome->pg-= 1;
+                            //$updateVisit->pp-= 1;
+                            $updateVisit->save();
+
+                            //$Updatepartido->empate = true;
+                            $Updatepartido->goles_home = intval($request['home']);
+                            $Updatepartido->goles_visit = intval($request['visit']);
+                            $Updatepartido->save();
+
+                            $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('empate', true)->get();
+                            foreach ($UpdateQuinelas as $quinela) {
+                                $quinela->win = true;
+                                $quinela->save();
+                            }
+                        }
+                       
+                    }elseif((intval($request['home']) < intval($request['visit']))){
+                        if($Updatepartido->home > $Updatepartido->visit){
+                            //$updateVisit->pj+=1;
+                            $updateVisit->pg-=1;
+                            $Updatepartido->pp+= 1;
+                            $updateVisit->gf= intval($request['visit']);
+                            $updateVisit->gc= intval($request['home']);
+                            $updateVisit->pts-= 3;
+                            $updateVisit->save();
+
+                            //$updateHome->pj+=1;
+                            $updateVisit->pg+=1;
+                            $updateHome->pp-=1;
+                            $updateHome->gf= intval($request['home']);
+                            $updateHome->gc= intval($request['visit']);
+                            $updateVisit->pts+= 3;
+                            $updateHome->save();
+
+                            $Updatepartido->visit = true;
+                            $Updatepartido->goles_home = intval($request['home']);
+                            $Updatepartido->goles_visit = intval($request['visit']);
+                            $Updatepartido->save();
+
+                            $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('visit', true)->get();
+                            foreach ($UpdateQuinelas as $quinela) {
+                                $quinela->win = true;
+                                $quinela->save();
+                            }
+                        }elseif($Updatepartido->home < $Updatepartido->visit){
+                            //$updateVisit->pj+=1;
+                            //$updateVisit->pg-=1;
+                            //$Updatepartido->pp+= 1;
+                            $updateVisit->gf= intval($request['visit']);
+                            $updateVisit->gc= intval($request['home']);
+                            //$updateVisit->pts-= 3;
+                            $updateVisit->save();
+
+                            //$updateHome->pj+=1;
+                            //$updateVisit->pg+=1;
+                            //$updateHome->pp-=1;
+                            $updateHome->gf= intval($request['home']);
+                            $updateHome->gc= intval($request['visit']);
+                            //$updateVisit->pts+= 3;
+                            $updateHome->save();
+
+                            $Updatepartido->visit = true;
+                            $Updatepartido->goles_home = intval($request['home']);
+                            $Updatepartido->goles_visit = intval($request['visit']);
+                            $Updatepartido->save();
+
+                            $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('visit', true)->get();
+                            foreach ($UpdateQuinelas as $quinela) {
+                                $quinela->win = true;
+                                $quinela->save();
+                            }
+                        }elseif($Updatepartido->home == $Updatepartido->visit){
+                            //$updateVisit->pj+=1;
+                            //$updateVisit->pg-=1;
+                            $Updatepartido->pp+= 1;
+                            $Updatepartido->e-=1;
+                            $updateVisit->gf= intval($request['visit']);
+                            $updateVisit->gc= intval($request['home']);
+                            $updateVisit->pts-= 1;
+                            $updateVisit->save();
+
+                            //$updateHome->pj+=1;
+                            $updateVisit->pg+=1;
+                            //$updateHome->pp-=1;
+                            $Updatepartido->e-=1;
+                            $updateHome->gf= intval($request['home']);
+                            $updateHome->gc= intval($request['visit']);
+                            $updateVisit->pts+= 2;
+                            $updateHome->save();
+
+                            $Updatepartido->visit = true;
+                            $Updatepartido->goles_home = intval($request['home']);
+                            $Updatepartido->goles_visit = intval($request['visit']);
+                            $Updatepartido->save();
+
+                            $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('visit', true)->get();
+                            foreach ($UpdateQuinelas as $quinela) {
+                                $quinela->win = true;
+                                $quinela->save();
+                            }
+                        }
                     }
 
-                }elseif(intval($request['home']) == intval($request['visit'])){
-                    //$perro = "empate";
-
-                    $updateHome->pj+= 1;
-                    $updateHome->e+= 1;
-                    $updateHome->gf+= intval($request['home']);
-                    $updateHome->gc+= intval($request['visit']);
-                    $updateHome->pts+= 1;
-                    $updateHome->save();
-
-                    $updateVisit->pj+= 1;
-                    $updateVisit->e+= 1;
-                    $updateVisit->gf+= intval($request['visit']);
-                    $updateVisit->gc+= intval($request['home']);
-                    $updateVisit->pts+= 1;
-                    $updateVisit->save();
-
-                    $Updatepartido->empate = true;
-                    $Updatepartido->goles_home = intval($request['home']);
-                    $Updatepartido->goles_visit = intval($request['visit']);
-                    $Updatepartido->save();
-
-                    $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('empate', true)->get();
-                    foreach ($UpdateQuinelas as $quinela) {
-                        $quinela->win = true;
-                        $quinela->save();
-                    }
-
-                }else{
-                    //$perro = "visit";
-                    $updateVisit->pj+=1;
-                    $updateVisit->pg+=1;
-                    $updateVisit->gf+= intval($request['visit']);
-                    $updateVisit->gc+= intval($request['home']);
-                    $updateVisit->pts+= 3;
-                    $updateVisit->save();
-
-                    $updateHome->pj+=1;
-                    $updateHome->pp+=1;
-                    $updateHome->gf+= intval($request['home']);
-                    $updateHome->gc+= intval($request['visit']);
-                    $updateHome->save();
-
-                    $Updatepartido->visit = true;
-                    $Updatepartido->goles_home = intval($request['home']);
-                    $Updatepartido->goles_visit = intval($request['visit']);
-                    $Updatepartido->save();
-
-                    $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('visit', true)->get();
-                    foreach ($UpdateQuinelas as $quinela) {
-                        $quinela->win = true;
-                        $quinela->save();
-                    }
+                    return response()->json(['partido'=>$Updatepartido],200);
                 }
-                return response()->json(['partido'=>$Updatepartido],200);
+            }
+            
         }else{
             return response()->json(['error'=>'Unauthorized'],401);
         }

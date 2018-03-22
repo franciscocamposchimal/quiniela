@@ -20,6 +20,7 @@ class CreateFasesDetalles extends Migration
             $table->boolean('empate')->default(false);
             $table->integer('goles_home')->default(0);
             $table->integer('goles_visit')->default(0);
+            $table->boolean('played')->default(false);
             $table->integer('id_fase')->unsigned();
             $table->integer('id_partido')->unsigned();
             $table->foreign('id_fase')
