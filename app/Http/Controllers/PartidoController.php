@@ -136,8 +136,8 @@ class PartidoController extends Controller
 
         $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
         $Updatepartido->home = true;
-        $Updatepartido->visit = false;
-        $Updatepartido->empate = false;
+        //$Updatepartido->visit = false;
+        //$Updatepartido->empate = false;
         $Updatepartido->goles_home = intval($goles_home);
         $Updatepartido->goles_visit = intval($goles_visit);
         $Updatepartido->played = true;
@@ -168,8 +168,8 @@ class PartidoController extends Controller
 
         $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
         $Updatepartido->visit = true;
-        $Updatepartido->home = false;
-        $Updatepartido->empate = false;
+        //$Updatepartido->home = false;
+        //$Updatepartido->empate = false;
         $Updatepartido->goles_home = intval($goles_home);
         $Updatepartido->goles_visit = intval($goles_visit);
         $Updatepartido->played = true;
@@ -200,8 +200,8 @@ class PartidoController extends Controller
 
         $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
         $Updatepartido->empate = true;
-        $Updatepartido->home = false;
-        $Updatepartido->visit = false;
+        //$Updatepartido->home = false;
+        //$Updatepartido->visit = false;
         $Updatepartido->goles_home = intval($goles_home);
         $Updatepartido->goles_visit = intval($goles_visit);
         $Updatepartido->played = true;
@@ -216,7 +216,7 @@ class PartidoController extends Controller
         return response()->json(['partido'=>$Updatepartido],200);
     }
 
-    protected function restaHome($updateHome, $updateVisit, $goles_home, $goles_visit){
+    protected function restaHome($updateHome, $updateVisit, $partido, $goles_home, $goles_visit){
         $updateHome->pj = $updateHome->pj - 1;
         $updateHome->pg = $updateHome->pg - 1;
         $updateHome->gf = $updateHome->gf - intval($goles_home);
@@ -229,8 +229,18 @@ class PartidoController extends Controller
         $updateVisit->gf = $updateVisit->gf - intval($goles_visit);
         $updateVisit->gc = $updateVisit->gc - intval($goles_home);
         $updateVisit->save();
+
+        $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
+        $Updatepartido->home = false;
+        $Updatepartido->save();
+
+        $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('home', true)->get();
+        foreach ($UpdateQuinelas as $quinela) {
+            $quinela->win = false;
+            $quinela->save();
+        }
     }
-    protected function restaVisit($updateHome, $updateVisit, $goles_home, $goles_visit){
+    protected function restaVisit($updateHome, $updateVisit, $partido, $goles_home, $goles_visit){
         $updateHome->pj = $updateHome->pj - 1;
         $updateHome->pp = $updateHome->pp - 1;
         $updateHome->gf = $updateHome->gf - intval($goles_home);
@@ -243,8 +253,18 @@ class PartidoController extends Controller
         $updateVisit->gc = $updateVisit->gc - intval($goles_home);
         $updateVisit->pts = $updateVisit->pts - 3;
         $updateVisit->save();
+
+        $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
+        $Updatepartido->visit = false;
+        $Updatepartido->save();
+
+        $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('visit', true)->get();
+        foreach ($UpdateQuinelas as $quinela) {
+            $quinela->win = false;
+            $quinela->save();
+        }
     }
-    protected function restaEmpate($updateHome, $updateVisit, $goles_home, $goles_visit){
+    protected function restaEmpate($updateHome, $updateVisit, $partido, $goles_home, $goles_visit){
         $updateHome->pj = $updateHome->pj - 1;
         $updateHome->e = $updateHome->e - 1;
         $updateHome->gf =  $updateHome->gf - intval($goles_home);
@@ -258,5 +278,15 @@ class PartidoController extends Controller
         $updateVisit->gc =  $updateVisit->gc - intval($goles_home);
         $updateVisit->pts = $updateVisit->pts - 1;
         $updateVisit->save();
+
+        $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
+        $Updatepartido->empate = false;
+        $Updatepartido->save();
+
+        $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('empate', true)->get();
+        foreach ($UpdateQuinelas as $quinela) {
+            $quinela->win = false;
+            $quinela->save();
+        }
     }
 }
