@@ -66,45 +66,50 @@ class PartidoController extends Controller
                     //$perro = "caso uno";
                     //Home ya habia ganado
                     if($Updatepartido->goles_home > $Updatepartido->goles_visit){
-                        $this->restaHome($updateHome, $updateVisit, $Updatepartido->goles_home, $Updatepartido->goles_visit); 
+                        $this->restaHome($updateHome, $updateVisit, $partido, $Updatepartido->goles_home, $Updatepartido->goles_visit); 
                     //Visit habia ganado
                     }elseif($Updatepartido->goles_home < $Updatepartido->goles_visit){
 
-                        $this->restaVisit($updateHome, $updateVisit, $Updatepartido->goles_home, $Updatepartido->goles_visit); 
+                        $this->restaVisit($updateHome, $updateVisit, $partido, $Updatepartido->goles_home, $Updatepartido->goles_visit); 
                     }
                     //Ahora edita home gana
                     if(intval($request['home']) > intval($request['visit'])){
 
-                        return $this->ganaHome($updateHome, $updateVisit, intval($request['home']), intval($request['visit']));
+                        return $this->ganaHome($updateHome, $updateVisit, $partido, intval($request['home']), intval($request['visit']));
                     //Ahora edita visit gana
                     }elseif(intval($request['home']) < intval($request['visit'])){
 
-                        return $this->ganaVisit($updateHome, $updateVisit, intval($request['home']), intval($request['visit']));
+                        return $this->ganaVisit($updateHome, $updateVisit, $partido, intval($request['home']), intval($request['visit']));
                     }
 
                 }elseif( ($Updatepartido->goles_home == $Updatepartido->goles_visit) && (intval($request['home']) != intval($request['visit'])) ){
                     //$perro = "caso dos";
-                    $this->restaEmpate($updateHome, $updateVisit, $Updatepartido->goles_home, $Updatepartido->goles_visit);
+                    $this->restaEmpate($updateHome, $updateVisit, $partido, $Updatepartido->goles_home, $Updatepartido->goles_visit);
+
                     if(intval($request['home']) > intval($request['visit'])){
+
                         return $this->ganaHome($updateHome, $updateVisit, $partido, intval($request['home']), intval($request['visit']));
+
                     }elseif(intval($request['home']) < intval($request['visit'])){
+
                         return $this->ganaVisit($updateHome, $updateVisit, $partido, intval($request['home']), intval($request['visit']));
                     }
                 }elseif( ($Updatepartido->goles_home == $Updatepartido->goles_visit) && (intval($request['home']) == intval($request['visit'])) ){
                     //$perro = "caso tres";
-                    $this->restaEmpate($updateHome, $updateVisit, $Updatepartido->goles_home , $Updatepartido->goles_visit);
+                    $this->restaEmpate($updateHome, $updateVisit, $partido,$Updatepartido->goles_home , $Updatepartido->goles_visit);
+
                     return $this->empate($updateHome, $updateVisit, $partido, intval($request['home']), intval($request['visit']));
 
                 }elseif( ($Updatepartido->goles_home != $Updatepartido->goles_visit) && (intval($request['home']) == intval($request['visit'])) ){
                     //$perro = "caso cuatro";
                     //caso ganó home y ahora será empate
                     if($Updatepartido->goles_home > $Updatepartido->goles_visit){
-                        $this->restaHome($updateHome, $updateVisit, $Updatepartido->goles_home, $Updatepartido->goles_visit);
+                        $this->restaHome($updateHome, $updateVisit, $partido, $Updatepartido->goles_home, $Updatepartido->goles_visit);
                     }//caso ganó visit y ahora será empate 
                     elseif($Updatepartido->goles_home < $Updatepartido->goles_visit){
-                        $this->restaVisit($updateHome, $updateVisit, $Updatepartido->goles_home, $Updatepartido->goles_visit);
+                        $this->restaVisit($updateHome, $updateVisit, $partido, $Updatepartido->goles_home, $Updatepartido->goles_visit);
                     }
-                    return $this->empate($updateHome, $updateVisit, intval($request['home']), intval($request['visit']));
+                    return $this->empate($updateHome, $updateVisit, $partido, intval($request['home']), intval($request['visit']));
                 }
             }
             
