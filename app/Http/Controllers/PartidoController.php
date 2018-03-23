@@ -111,13 +111,13 @@ class PartidoController extends Controller
                         return $this->empate($updateHome, $updateVisit, $partido,intval($request['home']), intval($request['visit']));
                     }//caso ganó visit y ahora será empate 
                     elseif($Updatepartido->goles_home < $Updatepartido->goles_visit){
-                        $this->restaVisit($updateHome, $updateVisit, intval($request['home']), intval($request['visit']));
-                        return $this->empate($updateHome, $updateVisit, $partido,intval($request['home']), intval($request['visit']));
+                        $this->restaVisit($updateHome, $updateVisit, $Updatepartido->goles_home, $Updatepartido->goles_visit);
+                        return $this->empate($updateHome, $updateVisit, $partido, intval($request['home']), intval($request['visit']));
                     }
                 }
             }
 
-            return response()->json(['partido'=>$perro],200);
+            //return response()->json(['partido'=>$perro],200);
             
         }else{
             return response()->json(['error'=>'Unauthorized'],401);
@@ -141,6 +141,8 @@ class PartidoController extends Controller
 
         $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
         $Updatepartido->home = true;
+        $Updatepartido->visit = false;
+        $Updatepartido->empate = false;
         $Updatepartido->goles_home = intval($goles_home);
         $Updatepartido->goles_visit = intval($goles_visit);
         $Updatepartido->played = true;
@@ -171,6 +173,8 @@ class PartidoController extends Controller
 
         $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
         $Updatepartido->visit = true;
+        $Updatepartido->home = false;
+        $Updatepartido->empate = false;
         $Updatepartido->goles_home = intval($goles_home);
         $Updatepartido->goles_visit = intval($goles_visit);
         $Updatepartido->played = true;
@@ -201,6 +205,8 @@ class PartidoController extends Controller
 
         $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
         $Updatepartido->empate = true;
+        $Updatepartido->home = false;
+        $Updatepartido->visit = false;
         $Updatepartido->goles_home = intval($goles_home);
         $Updatepartido->goles_visit = intval($goles_visit);
         $Updatepartido->played = true;
