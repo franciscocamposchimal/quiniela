@@ -13,22 +13,27 @@ use App\Quinela;
 class QuinelaController extends Controller
 {
     public function getAll($id){
-        $quinielasUser = User::with(['quinelas.partido.faseDetalle' => function ($query) {
-                                        $query->select(['id', 'id_partido','id_fase']);
-                                    }
-                                    ,'quinelas.partido.faseDetalle.fase'
-                                    ,'quinelas.partido.equipoVisit' => function ($query) {
-                                        $query->select(['id','id_equipo','id_gpo']);
-                                    }
-                                    ,'quinelas.partido.equipoVisit.equipo' 
-                                    ,'quinelas.partido.equipoVisit.grupo'
-                                    ,'quinelas.partido.equipoHome' => function ($query) {
-                                        $query->select(['id','id_equipo','id_gpo']);
-                                    }
-                                    ,'quinelas.partido.equipoHome.equipo'
-                                    ,'quinelas.partido.equipoHome.grupo'])->where('id', $id)->get(['id','name','username','email']);
+        $user = JWTAuth::parseToken()->authenticate();
+        if(($user->role == 2) && ($user->id == $id)){
+            $quinielasUser = User::with(['quinelas.partido.faseDetalle' => function ($query) {
+                $query->select(['id', 'id_partido','id_fase']);
+            }
+            ,'quinelas.partido.faseDetalle.fase'
+            ,'quinelas.partido.equipoVisit' => function ($query) {
+                $query->select(['id','id_equipo','id_gpo']);
+            }
+            ,'quinelas.partido.equipoVisit.equipo' 
+            ,'quinelas.partido.equipoVisit.grupo'
+            ,'quinelas.partido.equipoHome' => function ($query) {
+                $query->select(['id','id_equipo','id_gpo']);
+            }
+            ,'quinelas.partido.equipoHome.equipo'
+            ,'quinelas.partido.equipoHome.grupo'])->where('id', $id)->get(['id','name','username','email']);
 
-        return response()->json(['quinielas_user'=>$quinielasUser],200);
+            return response()->json(['quinielas_user'=>$quinielasUser],200);
+        }else{
+            return response()->json(['error'=>'User onUnauthorized'],401);
+        }
     }
 
     public function putQuinelas(Request $request, $id)
