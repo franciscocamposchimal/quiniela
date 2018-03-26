@@ -19,13 +19,18 @@ $api->version('v1', function ($api) {
         'uses' => 'App\Http\Controllers\Auth\AuthController@postLogin',
     ]);
 
-    $api->get('/octavos', [
+    /*$api->get('/octavos', [
         'uses' => 'App\Http\Controllers\OctavosController@getAllAdmin',
         'as' => 'api.octavos'
     ]);
     $api->get('/user/{id}/octavos', [
         'uses' => 'App\Http\Controllers\OctavosController@getAllUser',
         'as' => 'api.octavos'
+    ]);*/
+
+    $api->get('/user/{id}/quinielas', [
+        'uses' => 'App\Http\Controllers\QuinelaController@getAll',
+        'as' => 'api.quinielas'
     ]);
     
     $api->group([
@@ -34,10 +39,6 @@ $api->version('v1', function ($api) {
         $api->get('/', [
             'uses' => 'App\Http\Controllers\APIController@getIndex',
             'as' => 'api.index'
-        ]);
-        $api->get('/user/{id}/quinielas', [
-            'uses' => 'App\Http\Controllers\QuinelaController@getAll',
-            'as' => 'api.quinielas'
         ]);
         
         $api->put('/user/{id}/quinielas', [

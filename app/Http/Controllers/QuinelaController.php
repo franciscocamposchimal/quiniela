@@ -13,8 +13,7 @@ use App\Quinela;
 class QuinelaController extends Controller
 {
     public function getAll($id){
-        $user = JWTAuth::parseToken()->authenticate();
-        if(($user->role == 2) && ($user->id == $id)){
+
             $quinielasUser = User::with(['quinelas.partido.faseDetalle' => function ($query) {
                 $query->select(['id', 'id_partido','id_fase']);
             }
@@ -31,9 +30,7 @@ class QuinelaController extends Controller
             ,'quinelas.partido.equipoHome.grupo'])->where('id', $id)->get(['id','name','username','email']);
 
             return response()->json(['quinielas_user'=>$quinielasUser],200);
-        }else{
-            return response()->json(['error'=>'User onUnauthorized'],401);
-        }
+
     }
 
     public function putQuinelas(Request $request, $id)
