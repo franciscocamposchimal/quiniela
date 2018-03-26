@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GpoDetalle extends Model
 {
-    protected $table = 'gpoDetalles';
+    protected $table = 'gpodetalles';
 
     protected $fillable = [
         'pj',

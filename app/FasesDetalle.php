@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FasesDetalle extends Model
 {
-    protected $table = 'fasesDetalles';
+    protected $table = 'fasesdetalles';
 
     protected $fillable = [
         'home',
