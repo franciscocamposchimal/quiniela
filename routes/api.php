@@ -22,11 +22,11 @@ $api->version('v1', function ($api) {
     /*$api->get('/octavos', [
         'uses' => 'App\Http\Controllers\OctavosController@getAllAdmin',
         'as' => 'api.octavos'
+    ])*/;
+    $api->post('/finishers', [
+        'uses' => 'App\Http\Controllers\QuinelaController@finishers',
+        'as' => 'api.finishers'
     ]);
-    $api->get('/user/{id}/octavos', [
-        'uses' => 'App\Http\Controllers\OctavosController@getAllUser',
-        'as' => 'api.octavos'
-    ]);*/
 
     $api->get('/user/{id}/quinielas', [
         'uses' => 'App\Http\Controllers\QuinelaController@getAll',

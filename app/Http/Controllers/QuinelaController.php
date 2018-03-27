@@ -9,6 +9,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 use App\User;
 use App\Quinela;
+use App\Finishers;
 
 class QuinelaController extends Controller
 {
@@ -50,7 +51,7 @@ class QuinelaController extends Controller
             }
             /*$quinielaUser = User::with(['quinelas'=> function ($query) use ($id_partido,$request){
                                 $query->where('id_partido', $id_partido)->update([
-                                                'home' => filter_var($request['home'], FILTER_VALIDATE_BOOLEAN),
+                                                'ho[Formato Cotizaciones DW Medios (RESTAFRA).pdf](https://trello-attachments.s3.amazonaws.com/5aa176f48a661369dcb53bea/5ab99958cc778a3942382cc4/6e7deda9ef5cf6fcdf979aff4f0849ed/Formato_Cotizaciones_DW_Medios_(RESTAFRA).pdf) me' => filter_var($request['home'], FILTER_VALIDATE_BOOLEAN),
                                                 'visit' => filter_var($request['visit'], FILTER_VALIDATE_BOOLEAN),
                                                 'empate' => filter_var($request['empate'], FILTER_VALIDATE_BOOLEAN),
                                                 ]);
@@ -85,6 +86,37 @@ class QuinelaController extends Controller
         }])->having('false_count', '>',0)->orderBy('wins_count', 'asc')->take(10)->get();
 
         return response()->json(['last_ranking'=>$quinielas], 200);
+    }
+
+    public function finishers(Request $request)
+    {
+        //$finishers = Finishers::
+
+        $finishers = json_decode(json_encode($request['finishers'],true));
+
+        foreach ($finishers as $finisher) {
+            
+            if($finisher->place == "first_place"){
+                $newFisrtFinisher = new Finishers();
+                $newFisrtFinisher->place = $finisher->place;
+                $newFisrtFinisher->position = $finisher->position;
+                $newFisrtFinisher->id_user = $finisher->id_user;
+                $newFisrtFinisher->save();
+            }elseif($finisher->place == "last_place"){
+                $newLastFinisher = new Finishers();
+                $newLastFinisher->place = $finisher->place;
+                $newLastFinisher->position = $finisher->position;
+                $newLastFinisher->id_user = $finisher->id_user;
+                $newLastFinisher->save();
+            }
+
+        }
+
+        $findFinishers = Finishers::with(['user' => function ($query){
+            $query->select(['id', 'name']);
+        }])->get();
+
+        return response()->json(['finishers'=>$findFinishers], 200);
     }
 
 }
