@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use App\Quinela;
+use Carbon\Carbon;
 
 class PruebaTableSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class PruebaTableSeeder extends Seeder
      */
     public function run()
     {
-        $id_partido = 2;
+       // $id_partido = 2;
        /* $id = 7;
         $quinielaUser = User::with(['quinelas'=> function ($query) use ($id_partido){
                             $query->where('id_partido', $id_partido);
@@ -26,11 +27,16 @@ class PruebaTableSeeder extends Seeder
              
             }
         }*/
-        $UpdateQuinelas = Quinela::where('id_partido', $id_partido)->where('visit', true)->get();
+        /*$UpdateQuinelas = Quinela::where('id_partido', $id_partido)->where('visit', true)->get();
         foreach ($UpdateQuinelas as $quinela) {
             //$quinela->win = true;
             //$quinela->save();
             echo $quinela;
-        }
+        }*/
+
+        $now = Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM');
+
+        echo $now;
+
     }
 }
