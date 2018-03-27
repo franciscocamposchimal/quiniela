@@ -33,8 +33,25 @@ class AuthController extends Controller
             ]);
             //$user = User::where('username', $request->username)->select(['id', 'name', 'username', 'email'])->first();
             $user = User::select(['id', 'name', 'username', 'email'])->withCount(['quinelas AS wins' => function($query){
-                $query->where('win', '>', 0);
+                $query->where('win', '=', true);
             }])->where('username', $request->username)->first();
+
+            $quinielas = User::select('id', 'name')->withCount(['quinelas AS win' => function ($query){
+                $query->where('win', '=', true);
+            }])->withCount(['quinelas AS no_win' => function ($query){
+                $query->Where('home', '=', true)
+                ->orWhere('visit', '=', true)
+                ->orWhere('empate', '=', true);
+            }])->having('no_win_count', '>', 0)->orderBy('win_count', 'desc')->get();
+
+            $array_ranking = json_decode($quinielas);
+            $user_id = $user->id;
+            foreach($array_ranking as $index => $value){
+                    if($value->id == $user_id){
+                        $posicion_ranking = $index + 1;
+                    }
+            }
+
         } catch (ValidationException $e) {
             return $e->getResponse();
         }
@@ -52,7 +69,7 @@ class AuthController extends Controller
         }
 
         // All good so return the token
-        return $this->onAuthorized($token, $user);
+        return $this->onAuthorized($token, $user, $quinielas, $posicion_ranking);
     }
 
     /**
@@ -84,12 +101,14 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    protected function onAuthorized($token, $user)
+    protected function onAuthorized($token, $user, $quinielas, $posicion_ranking)
     {
        
         return new JsonResponse([
             'message' => 'token_generated',
             'user' => $user,
+            'quinielas_win' => $quinielas,
+            'posicion_ranking' => $posicion_ranking,
             'data' => [
                 'token' => $token,
             ]
