@@ -68,9 +68,23 @@ class QuinelaController extends Controller
     public function rankingQuinela()
     {
         $quinielas = User::select('id', 'name')->withCount(['quinelas' => function ($query){
-            $query->where('win','>', 0);
-        }])->orderBy('quinelas_count', 'desc')->take(10)->get();
+            $query->where('win','=', true);
+        }])->orderBy('quinelas_count', 'desc')->take(50)->get();
 
         return response()->json(['users'=>$quinielas], 200);
     }
+
+    public function lastRankingQuinela()
+    {
+        $quinielas = User::select('id', 'name')->withCount(['quinelas AS wins' => function ($query){
+            $query->where('win','=', true);
+        }])->withCount(['quinelas AS false' => function ($query){
+            $query->Where('home', '=', true)
+                  ->orWhere('visit', '=', true)
+                  ->orWhere('empate', '=', true);
+        }])->having('false_count', '>',0)->orderBy('wins_count', 'asc')->take(10)->get();
+
+        return response()->json(['last_ranking'=>$quinielas], 200);
+    }
+
 }
