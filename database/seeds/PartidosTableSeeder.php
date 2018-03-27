@@ -19,7 +19,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 1)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 2)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '14/06/2018 10:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -27,7 +27,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 3)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 4)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 07:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -35,7 +35,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 7)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 8)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -43,7 +43,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 5)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 6)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -51,7 +51,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 9)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 10)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '16/06/2018 05:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -59,7 +59,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 13)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 14)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '16/06/2018 08:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -67,7 +67,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 11)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 12)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '16/06/2018 11:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -75,7 +75,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 15)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 16)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '16/06/2018 02:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -83,7 +83,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 19)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 20)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '17/06/2018 07:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -91,7 +91,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 21)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 22)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '17/06/2018 10:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -99,7 +99,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 17)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 18)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '17/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -107,7 +107,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 23)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 24)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '18/06/2018 07:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -115,7 +115,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 25)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 26)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '18/06/2018 10:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -123,7 +123,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 27)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 28)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '18/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -131,7 +131,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 29)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 30)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '19/06/2018 07:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -139,7 +139,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 31)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 32)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '19/06/2018 10:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -147,7 +147,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 1)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 3)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '19/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -155,7 +155,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 5)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 7)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '20/06/2018 07:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -163,7 +163,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 4)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 2)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '20/06/2018 10:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -171,7 +171,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 8)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 6)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '20/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -179,7 +179,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 9)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 11)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '21/06/2018 07:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -187,7 +187,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 12)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 10)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '21/06/2018 10:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -195,7 +195,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 13)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 15)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '21/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -203,7 +203,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 17)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 19)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '22/06/2018 07:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -211,7 +211,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 16)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 14)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '22/06/2018 10:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -219,7 +219,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 20)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 18)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '22/06/2018 01:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -227,7 +227,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 25)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 27)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '23/06/2018 07:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -235,7 +235,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 21)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 23)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '23/06/2018 10:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -243,7 +243,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 24)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 22)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '23/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -251,7 +251,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 28)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 26)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '24/06/2018 07:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -259,7 +259,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 32)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 30)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '24/06/2018 10:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -267,7 +267,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 29)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 31)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '24/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -275,7 +275,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 2)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 3)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '25/06/2018 09:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -283,7 +283,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 4)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 1)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '25/06/2018 09:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -291,7 +291,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 6)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 7)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '25/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -299,7 +299,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 8)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 5)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '25/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -307,7 +307,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 12)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 9)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '26/06/2018 09:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -315,7 +315,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 10)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 11)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '26/06/2018 09:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -323,7 +323,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 14)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 15)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '26/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -331,7 +331,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 16)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 13)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '26/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -339,7 +339,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 24)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 21)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '27/06/2018 09:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -347,7 +347,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 22)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 23)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '27/06/2018 09:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -355,7 +355,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 20)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 17)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '27/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -363,7 +363,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 18)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 19)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '27/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -371,7 +371,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 30)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 31)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '28/06/2018 09:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -379,7 +379,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 32)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 29)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '28/06/2018 09:00 AM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -387,7 +387,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 28)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 25)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '28/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -395,7 +395,7 @@ class PartidosTableSeeder extends Seeder
             [
                 'id_gpodet_home' => App\GpoDetalle::where('id_equipo', 26)->value('id'),
                 'id_gpodet_visit' => App\GpoDetalle::where('id_equipo', 27)->value('id'),
-                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '15/06/2018 10:00 PM'),
+                'fecha' => Carbon::createFromFormat('d/m/Y h:i A', '28/06/2018 01:00 PM'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
