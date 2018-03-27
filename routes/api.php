@@ -49,6 +49,12 @@ $api->version('v1', function ($api) {
             'uses' => 'App\Http\Controllers\QuinelaController@rankingQuinela',
             'as' => 'api.ranking'
         ]);
+
+        $api->get('/quinielas/ranking-last', [
+            'uses' => 'App\Http\Controllers\QuinelaController@lastRankingQuinela',
+            'as' => 'api.ranking'
+        ]);
+
         $api->get('/partidos', [
             'uses' => 'App\Http\Controllers\PartidoController@getAllPartidos',
             'as' => 'api.partidos'
