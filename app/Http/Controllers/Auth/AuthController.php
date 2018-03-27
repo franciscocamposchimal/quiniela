@@ -44,14 +44,17 @@ class AuthController extends Controller
                 ->orWhere('empate', '=', true);
             }])->having('no_win_count', '>', 0)->orderBy('win_count', 'desc')->get();
 
-            $array_ranking = json_decode($quinielas);
-            $user_id = $user->id;
-            foreach($array_ranking as $index => $value){
-                    if($value->id == $user_id){
-                        $posicion_ranking = $index + 1;
-                    }
+            if($user->wins_count > 0){
+                $array_ranking = json_decode($quinielas);
+                $user_id = $user->id;
+                $posicion_ranking;
+                foreach($array_ranking as $index => $value){
+                        if($value->id == $user_id){
+                            $posicion_ranking = $index + 1;
+                        }
+                }
+                $user->posicion_ranking = $posicion_ranking;
             }
-            $user->posicion_ranking = $posicion_ranking;
 
         } catch (ValidationException $e) {
             return $e->getResponse();
@@ -104,7 +107,6 @@ class AuthController extends Controller
      */
     protected function onAuthorized($token, $user)
     {
-       
         return new JsonResponse([
             'message' => 'token_generated',
             'user' => $user,

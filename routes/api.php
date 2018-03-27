@@ -23,10 +23,6 @@ $api->version('v1', function ($api) {
         'uses' => 'App\Http\Controllers\OctavosController@getAllAdmin',
         'as' => 'api.octavos'
     ])*/;
-    $api->post('/finishers', [
-        'uses' => 'App\Http\Controllers\QuinelaController@finishers',
-        'as' => 'api.finishers'
-    ]);
 
     $api->get('/user/{id}/quinielas', [
         'uses' => 'App\Http\Controllers\QuinelaController@getAll',
@@ -94,6 +90,16 @@ $api->version('v1', function ($api) {
         $api->delete('/auth/invalidate', [
             'uses' => 'App\Http\Controllers\Auth\AuthController@deleteInvalidate',
             'as' => 'api.auth.invalidate'
+        ]);
+        
+        $api->post('/finishers', [
+            'uses' => 'App\Http\Controllers\QuinelaController@finishers',
+            'as' => 'api.finishers'
+        ]);
+
+        $api->get('/finishers',[
+            'uses' => 'App\Http\Controllers\QuinelaController@getFinishers',
+            'as' => 'api.quinela.finishers'
         ]);
     });
 });
