@@ -51,6 +51,7 @@ class AuthController extends Controller
                         $posicion_ranking = $index + 1;
                     }
             }
+            $user->posicion_ranking = $posicion_ranking;
 
         } catch (ValidationException $e) {
             return $e->getResponse();
@@ -69,7 +70,7 @@ class AuthController extends Controller
         }
 
         // All good so return the token
-        return $this->onAuthorized($token, $user, $quinielas, $posicion_ranking);
+        return $this->onAuthorized($token, $user);
     }
 
     /**
@@ -101,14 +102,12 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    protected function onAuthorized($token, $user, $quinielas, $posicion_ranking)
+    protected function onAuthorized($token, $user)
     {
        
         return new JsonResponse([
             'message' => 'token_generated',
             'user' => $user,
-            'quinielas_win' => $quinielas,
-            'posicion_ranking' => $posicion_ranking,
             'data' => [
                 'token' => $token,
             ]
