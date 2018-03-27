@@ -31,7 +31,10 @@ class AuthController extends Controller
                 'username' => 'required',
                 'password' => 'required',
             ]);
-            $user = User::where('username', $request->username)->select(['id', 'name', 'username', 'email'])->first();
+            //$user = User::where('username', $request->username)->select(['id', 'name', 'username', 'email'])->first();
+            $user = User::select(['id', 'name', 'username', 'email'])->withCount(['quinelas AS wins' => function($query){
+                $query->where('win', '>', 0);
+            }])->where('username', $request->username)->first();
         } catch (ValidationException $e) {
             return $e->getResponse();
         }
