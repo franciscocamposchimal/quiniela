@@ -216,76 +216,88 @@ class PartidoController extends Controller
     }
 
     protected function restaHome($updateHome, $updateVisit, $partido, $goles_home, $goles_visit){
-        $updateHome->pj = $updateHome->pj - 1;
-        $updateHome->pg = $updateHome->pg - 1;
-        $updateHome->gf = $updateHome->gf - intval($goles_home);
-        $updateHome->gc = $updateHome->gc - intval($goles_visit);
-        $updateHome->pts = $updateHome->pts - 3;
-        $updateHome->save();
+        if(( $updateHome->pj > 0) || ($updateHome->pg > 0) || ($updateHome->pts > 0) || ($updateVisit->pj > 0) || ($updateVisit->pp > 0)){
+            $updateHome->pj = $updateHome->pj - 1;
+            $updateHome->pg = $updateHome->pg - 1;
+            $updateHome->gf = $updateHome->gf - intval($goles_home);
+            $updateHome->gc = $updateHome->gc - intval($goles_visit);
+            $updateHome->pts = $updateHome->pts - 3;
+            $updateHome->save();
 
-        $updateVisit->pj = $updateVisit->pj - 1;
-        $updateVisit->pp = $updateVisit->pp - 1;
-        $updateVisit->gf = $updateVisit->gf - intval($goles_visit);
-        $updateVisit->gc = $updateVisit->gc - intval($goles_home);
-        $updateVisit->save();
+            $updateVisit->pj = $updateVisit->pj - 1;
+            $updateVisit->pp = $updateVisit->pp - 1;
+            $updateVisit->gf = $updateVisit->gf - intval($goles_visit);
+            $updateVisit->gc = $updateVisit->gc - intval($goles_home);
+            $updateVisit->save();
 
-        $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
-        $Updatepartido->home = false;
-        $Updatepartido->save();
+            $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
+            $Updatepartido->home = false;
+            $Updatepartido->save();
 
-        $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('home', true)->get();
-        foreach ($UpdateQuinelas as $quinela) {
-            $quinela->win = false;
-            $quinela->save();
+            $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('home', true)->get();
+            foreach ($UpdateQuinelas as $quinela) {
+                $quinela->win = false;
+                $quinela->save();
+            }
+        }else{
+            return response()->json(['error'=>'No se puede restar'],200);
         }
     }
     protected function restaVisit($updateHome, $updateVisit, $partido, $goles_home, $goles_visit){
-        $updateHome->pj = $updateHome->pj - 1;
-        $updateHome->pp = $updateHome->pp - 1;
-        $updateHome->gf = $updateHome->gf - intval($goles_home);
-        $updateHome->gc = $updateHome->gc - intval($goles_visit);
-        $updateHome->save();
+        if(($updateHome->pj > 0) || ($updateHome->pp > 0) || ($updateVisit->pj > 0) || ($updateVisit->pg > 0) || ($updateVisit->pts > 0)){
+            $updateHome->pj = $updateHome->pj - 1;
+            $updateHome->pp = $updateHome->pp - 1;
+            $updateHome->gf = $updateHome->gf - intval($goles_home);
+            $updateHome->gc = $updateHome->gc - intval($goles_visit);
+            $updateHome->save();
 
-        $updateVisit->pj = $updateVisit->pj - 1;
-        $updateVisit->pg = $updateVisit->pg -1;
-        $updateVisit->gf = $updateVisit->gf - intval($goles_visit);
-        $updateVisit->gc = $updateVisit->gc - intval($goles_home);
-        $updateVisit->pts = $updateVisit->pts - 3;
-        $updateVisit->save();
+            $updateVisit->pj = $updateVisit->pj - 1;
+            $updateVisit->pg = $updateVisit->pg -1;
+            $updateVisit->gf = $updateVisit->gf - intval($goles_visit);
+            $updateVisit->gc = $updateVisit->gc - intval($goles_home);
+            $updateVisit->pts = $updateVisit->pts - 3;
+            $updateVisit->save();
 
-        $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
-        $Updatepartido->visit = false;
-        $Updatepartido->save();
+            $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
+            $Updatepartido->visit = false;
+            $Updatepartido->save();
 
-        $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('visit', true)->get();
-        foreach ($UpdateQuinelas as $quinela) {
-            $quinela->win = false;
-            $quinela->save();
+            $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('visit', true)->get();
+            foreach ($UpdateQuinelas as $quinela) {
+                $quinela->win = false;
+                $quinela->save();
+            }   
+        }else{
+            return response()->json(['error'=>'No se puede restar'],200);
         }
     }
     protected function restaEmpate($updateHome, $updateVisit, $partido, $goles_home, $goles_visit){
-        $updateHome->pj = $updateHome->pj - 1;
-        $updateHome->e = $updateHome->e - 1;
-        $updateHome->gf =  $updateHome->gf - intval($goles_home);
-        $updateHome->gc =  $updateHome->gc - intval($goles_visit);
-        $updateHome->pts = $updateHome->pts - 1;
-        $updateHome->save();
+        if(($updateHome->pj > 0) || ($updateHome->e > 0) || ($updateHome->pts > 0) || ($updateVisit->pj > 0) || ($updateVisit->e > 0) || ( $updateVisit->pts > 0)){
+            $updateHome->pj = $updateHome->pj - 1;
+            $updateHome->e = $updateHome->e - 1;
+            $updateHome->gf =  $updateHome->gf - intval($goles_home);
+            $updateHome->gc =  $updateHome->gc - intval($goles_visit);
+            $updateHome->pts = $updateHome->pts - 1;
+            $updateHome->save();
 
-        $updateVisit->pj = $updateVisit->pj - 1;
-        $updateVisit->e =  $updateVisit->e - 1;
-        $updateVisit->gf = $updateVisit->gf - intval($goles_visit);
-        $updateVisit->gc =  $updateVisit->gc - intval($goles_home);
-        $updateVisit->pts = $updateVisit->pts - 1;
-        $updateVisit->save();
+            $updateVisit->pj = $updateVisit->pj - 1;
+            $updateVisit->e =  $updateVisit->e - 1;
+            $updateVisit->gf = $updateVisit->gf - intval($goles_visit);
+            $updateVisit->gc =  $updateVisit->gc - intval($goles_home);
+            $updateVisit->pts = $updateVisit->pts - 1;
+            $updateVisit->save();
 
-        $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
-        $Updatepartido->empate = false;
-        $Updatepartido->save();
+            $Updatepartido = FasesDetalle::with(['fase','partido.equipoHome.equipo','partido.equipoVisit.equipo'])->where('id_partido', $partido->id)->first();
+            $Updatepartido->empate = false;
+            $Updatepartido->save();
 
-        $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('empate', true)->get();
-        foreach ($UpdateQuinelas as $quinela) {
-            $quinela->win = false;
-            $quinela->save();
+            $UpdateQuinelas = Quinela::where('id_partido', $partido->id)->where('empate', true)->get();
+            foreach ($UpdateQuinelas as $quinela) {
+                $quinela->win = false;
+                $quinela->save();
+            }
+        }else{
+            return response()->json(['error'=>'No se puede restar'],200);
         }
     }
 }
