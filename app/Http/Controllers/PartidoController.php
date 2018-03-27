@@ -43,7 +43,7 @@ class PartidoController extends Controller
             $updateHome= GpoDetalle::where('id',$partido->equipoHome->id)->first();
             $updateVisit= GpoDetalle::where('id',$partido->equipoVisit->id)->first();
 
-            if($request['played'] == true){
+            if(filter_var($request['played'], FILTER_VALIDATE_BOOLEAN) == true){
 
 
                 if(intval($request['home']) > intval($request['visit'])){
@@ -59,7 +59,7 @@ class PartidoController extends Controller
                         return $this->ganaVisit($updateHome, $updateVisit, $partido, $request['home'], $request['visit']);
                     }
 
-            }elseif($request['played'] == false){
+            }elseif(filter_var($request['played'], FILTER_VALIDATE_BOOLEAN) == false){
 
                 $Updatepartido = FasesDetalle::where('id_partido', $id_partido)->first();
                 if( ($Updatepartido->goles_home != $Updatepartido->goles_visit) && (intval($request['home']) != intval($request['visit'])) ){
