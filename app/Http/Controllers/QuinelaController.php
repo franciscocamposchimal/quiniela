@@ -91,32 +91,51 @@ class QuinelaController extends Controller
     public function finishers(Request $request)
     {
         //$finishers = Finishers::
+        $user = JWTAuth::parseToken()->authenticate();
+        if($user->role == 1){
+            $finishers = json_decode(json_encode($request['finishers'],true));
 
-        $finishers = json_decode(json_encode($request['finishers'],true));
-
-        foreach ($finishers as $finisher) {
-            
-            if($finisher->place == "first_place"){
-                $newFisrtFinisher = new Finishers();
-                $newFisrtFinisher->place = $finisher->place;
-                $newFisrtFinisher->position = $finisher->position;
-                $newFisrtFinisher->id_user = $finisher->id_user;
-                $newFisrtFinisher->save();
-            }elseif($finisher->place == "last_place"){
-                $newLastFinisher = new Finishers();
-                $newLastFinisher->place = $finisher->place;
-                $newLastFinisher->position = $finisher->position;
-                $newLastFinisher->id_user = $finisher->id_user;
-                $newLastFinisher->save();
+            foreach ($finishers as $finisher) {
+                
+                if($finisher->place == "first_place"){
+                    $newFisrtFinisher = new Finishers();
+                    $newFisrtFinisher->place = $finisher->place;
+                    $newFisrtFinisher->position = $finisher->position;
+                    $newFisrtFinisher->id_user = $finisher->id_user;
+                    $newFisrtFinisher->save();
+                }elseif($finisher->place == "last_place"){
+                    $newLastFinisher = new Finishers();
+                    $newLastFinisher->place = $finisher->place;
+                    $newLastFinisher->position = $finisher->position;
+                    $newLastFinisher->id_user = $finisher->id_user;
+                    $newLastFinisher->save();
+                }
             }
 
+                $findFinishers = Finishers::with(['user' => function ($query){
+                    $query->select(['id', 'name']);
+                }])->get();
+        
+                return response()->json(['finishers'=>$findFinishers], 200);
+        }else{
+            return response()->json(['error'=>'Unauthorized'],401);
         }
-
-        $findFinishers = Finishers::with(['user' => function ($query){
-            $query->select(['id', 'name']);
-        }])->get();
-
-        return response()->json(['finishers'=>$findFinishers], 200);
     }
 
+    public function getFinishers(){
+        $user = JWTAuth::parseToken()->authenticate();
+        if($user->role == 1 || $user->role == 2){
+            $finishers_firstplace = Finishers::with(['user' => function ($query){
+                $query->select(['id', 'name']);
+            }])->orderBy('position', 'asc')->where('place', '=', 'first_place')->get();
+            $finishers_lastplace = Finishers::with(['user' => function ($query){
+                $query->select(['id', 'name']);
+            }])->orderBy('position', 'asc')->where('place', '=', 'last_place')->get();
+            
+            //$finishers->ultimo = $finishers_lastplace;
+            return response()->json(['first_places'=>$finishers_firstplace, 'last_place'=>$finishers_lastplace], 200);
+        }else{
+            return response()->json(['error'=>'Unauthorized'],401);
+        }
+    }
 }
