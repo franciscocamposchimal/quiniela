@@ -15,6 +15,7 @@ class CreatePartidos extends Migration
     {
         Schema::create('partidos', function (Blueprint $table) {
             $table->increments('id');
+            $table->dateTime('fecha');
             $table->integer('id_gpodet_home')->unsigned();
             $table->integer('id_gpodet_visit')->unsigned();
             $table->foreign('id_gpodet_home')

@@ -10,6 +10,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use App\User;
 use App\Quinela;
 use App\Finishers;
+use Carbon\Carbon;
 
 class QuinelaController extends Controller
 {
@@ -36,30 +37,32 @@ class QuinelaController extends Controller
 
     public function putQuinelas(Request $request, $id)
     {
+        $date = Carbon::createFromFormat('d/m/Y', '13/06/2018')->subDay()->format('m-d-Y');
+        $today = Carbon::now()->subDay()->format('m-d-Y');
+
         $user = JWTAuth::parseToken()->authenticate();
         if($user->role == 2){
-            $quinielas = json_decode(json_encode($request['quinielas'],true));
-            foreach ($quinielas as $quiniela) {
-                
-                User::with(['quinelas'=> function ($query) use ($quiniela){
-                    $query->where('id_partido', $quiniela->id_partido)->update([
-                                    'home' => filter_var($quiniela->home, FILTER_VALIDATE_BOOLEAN),
-                                    'visit' => filter_var($quiniela->visit, FILTER_VALIDATE_BOOLEAN),
-                                    'empate' => filter_var($quiniela->empate, FILTER_VALIDATE_BOOLEAN),
-                                    ]);
-                }])->where('id', $id)->get(['id']);
+
+            if($date == $today){
+                return response()->json(['error'=>'Unauthorized'],401);
+            }else{
+                $quinielas = json_decode(json_encode($request['quinielas'],true));
+                foreach ($quinielas as $quiniela) {
+                    
+                    User::with(['quinelas'=> function ($query) use ($quiniela){
+                        $query->where('id_partido', $quiniela->id_partido)->update([
+                                        'home' => filter_var($quiniela->home, FILTER_VALIDATE_BOOLEAN),
+                                        'visit' => filter_var($quiniela->visit, FILTER_VALIDATE_BOOLEAN),
+                                        'empate' => filter_var($quiniela->empate, FILTER_VALIDATE_BOOLEAN),
+                                        ]);
+                    }])->where('id', $id)->get(['id']);
+                }
+    
+                $quinielasUser = User::with('quinelas')->where('id', $id)->get(['id']);
+    
+                return response()->json(['partido'=>$quinielasUser],200);
             }
-            /*$quinielaUser = User::with(['quinelas'=> function ($query) use ($id_partido,$request){
-                                $query->where('id_partido', $id_partido)->update([
-                                                'ho[Formato Cotizaciones DW Medios (RESTAFRA).pdf](https://trello-attachments.s3.amazonaws.com/5aa176f48a661369dcb53bea/5ab99958cc778a3942382cc4/6e7deda9ef5cf6fcdf979aff4f0849ed/Formato_Cotizaciones_DW_Medios_(RESTAFRA).pdf) me' => filter_var($request['home'], FILTER_VALIDATE_BOOLEAN),
-                                                'visit' => filter_var($request['visit'], FILTER_VALIDATE_BOOLEAN),
-                                                'empate' => filter_var($request['empate'], FILTER_VALIDATE_BOOLEAN),
-                                                ]);
-                            }])->where('id', $id)->get(['id']);*/
-
-            $quinielasUser = User::with('quinelas')->where('id', $id)->get(['id']);
-
-            return response()->json(['partido'=>$quinielasUser],200);
+           
         }else{
             return response()->json(['error'=>'Unauthorized'],401);
         }
