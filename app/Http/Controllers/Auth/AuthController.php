@@ -209,9 +209,9 @@ class AuthController extends Controller
     {
         try{
             $this->validate($request, [
-                'name' => 'required|regex:/^([A-Za-z])+\s+([A-Za-z])+$/|max:255',
-                'username' => 'required|alpha_dash|max:255',
-                'email' => 'required|email|max:255'
+                'name' => 'required|regex:/^([A-Za-z]+\.+\s)?([A-Za-z]+\s)?([A-Za-z])+\s+([A-Za-z])+$/|unique:users,name|max:255',
+                'username' => 'required|alpha_dash|unique:users,username|max:255',
+                'email' => 'required|email|unique:users,email|max:255'
             ]);
             $user = JWTAuth::parseToken()->authenticate();
             if($user->role == 1){
@@ -238,13 +238,13 @@ class AuthController extends Controller
                         'updated_at'=>date('Y-m-d H:i:s')]);
                     }
                 return response()->json(['user'=>$newUser,'password'=>$pass],201);
-                //return response()->json(['user'=>'valido'],201);
+                return response()->json(['user'=>'valido'],201);
             }else{
                 return response()->json(['error'=>'Unauthorized'],401);
             }
         }
         catch(ValidationException $e){
-            return response()->json(['error'=>'No valido'],500);
+            return response()->json(['error'=>'No valido o usuario existente'],500);
         }
     }
     /**
@@ -256,9 +256,9 @@ class AuthController extends Controller
     {
         try{
             $this->validate($request, [
-                'name' => 'required|regex:/^([A-Za-z])+\s+([A-Za-z])+$/|max:255',
-                'username' => 'required|alpha_dash|max:255',
-                'email' => 'required|email|max:255'
+                'name' => 'required|regex:/^([A-Za-z]+\.+\s)?([A-Za-z]+\s)?([A-Za-z])+\s+([A-Za-z])+$/|unique:users,name|max:255',
+                'username' => 'required|alpha_dash|unique:users,username|max:255',
+                'email' => 'required|email|unique:users,email|max:255'
             ]);
             
             $user = JWTAuth::parseToken()->authenticate();
@@ -274,7 +274,7 @@ class AuthController extends Controller
             }
         }
         catch(ValidationException $e){
-            return response()->json(['error'=>'No valido'],500);
+            return response()->json(['error'=>'No valido o datos existentes'],500);
         }
     }
     /**
