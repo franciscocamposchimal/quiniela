@@ -207,33 +207,44 @@ class AuthController extends Controller
      */
     public function createUser(Request $request)
     {
-        $user = JWTAuth::parseToken()->authenticate();
-        if($user->role == 1){
-            $partidos = Partido::all();
+        try{
+            $this->validate($request, [
+                'name' => 'required|regex:/^([A-Za-z])+\s+([A-Za-z])+$/|max:255',
+                'username' => 'required|alpha_dash|max:255',
+                'email' => 'required|email|max:255'
+            ]);
+            $user = JWTAuth::parseToken()->authenticate();
+            if($user->role == 1){
+                $partidos = Partido::all();
 
-            $pass = str_random(8);
-            $newUser = new User();
-            $newUser->name = $request['name'];
-            $newUser->username = $request['username'];
-            $newUser->email = $request['email'];
-            $newUser->password = Hash::make($pass);
-            $newUser->pass = $pass;
-            $newUser->role = 2;
-            $newUser->remember_token = str_random(10);
-            $newUser->save();
-            foreach($partidos as $partido){
-                $quinela = Quinela::insert([
-                    'home'=>false, 
-                    'visit'=>false, 
-                    'empate'=>false,
-                    'id_user'=>$newUser->id, 
-                    'id_partido'=>$partido->id,
-                    'created_at'=>date('Y-m-d H:i:s'),
-                    'updated_at'=>date('Y-m-d H:i:s')]);
+                $pass = str_random(8);
+                $newUser = new User();
+                $newUser->name = $request['name'];
+                $newUser->username = $request['username'];
+                $newUser->email = $request['email'];
+                $newUser->password = Hash::make($pass);
+                $newUser->pass = $pass;
+                $newUser->role = 2;
+                $newUser->remember_token = str_random(10);
+                $newUser->save();
+                foreach($partidos as $partido){
+                    $quinela = Quinela::insert([
+                        'home'=>false, 
+                        'visit'=>false, 
+                        'empate'=>false,
+                        'id_user'=>$newUser->id, 
+                        'id_partido'=>$partido->id,
+                        'created_at'=>date('Y-m-d H:i:s'),
+                        'updated_at'=>date('Y-m-d H:i:s')]);
+                    }
+                return response()->json(['user'=>$newUser,'password'=>$pass],201);
+                //return response()->json(['user'=>'valido'],201);
+            }else{
+                return response()->json(['error'=>'Unauthorized'],401);
             }
-            return response()->json(['user'=>$newUser,'password'=>$pass],201);
-        }else{
-            return response()->json(['error'=>'Unauthorized'],401);
+        }
+        catch(ValidationException $e){
+            return response()->json(['error'=>'No valido'],500);
         }
     }
     /**
@@ -243,16 +254,27 @@ class AuthController extends Controller
      */
     public function updateUser(Request $request,$id)
     {
-        $user = JWTAuth::parseToken()->authenticate();
-        if($user->role == 1){
-            $userUpdated = User::find($id);
-            $userUpdated->name = $request['name'];
-            $userUpdated->username = $request['username'];
-            $userUpdated->email = $request['email'];
-            $userUpdated->save();
-            return response()->json(['user'=>$userUpdated],200);
-        }else{
-            return response()->json(['error'=>'Unauthorized'],401);
+        try{
+            $this->validate($request, [
+                'name' => 'required|regex:/^([A-Za-z])+\s+([A-Za-z])+$/|max:255',
+                'username' => 'required|alpha_dash|max:255',
+                'email' => 'required|email|max:255'
+            ]);
+            
+            $user = JWTAuth::parseToken()->authenticate();
+            if($user->role == 1){
+                $userUpdated = User::find($id);
+                $userUpdated->name = $request['name'];
+                $userUpdated->username = $request['username'];
+                $userUpdated->email = $request['email'];
+                $userUpdated->save();
+                return response()->json(['user'=>$userUpdated],200);
+            }else{
+                return response()->json(['error'=>'Unauthorized'],401);
+            }
+        }
+        catch(ValidationException $e){
+            return response()->json(['error'=>'No valido'],500);
         }
     }
     /**
