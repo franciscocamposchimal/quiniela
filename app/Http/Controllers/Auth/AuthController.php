@@ -282,14 +282,16 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function resetPassword($id)
+    public function resetPassword(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
         if($user->role == 1){
-            $pass = str_random(8);
+            $pass = $request['password'];
             $userReset = User::find($id);
             $userReset->password = Hash::make($pass);
+            $userReset->pass = $pass;
             $userReset->save();
+            //$hash_pass = Hash::make($pass);
             return response()->json(['user'=>$userReset, 'password'=>$pass],201);
         }else{
             return response()->json(['error'=>'Unauthorized'],401);
