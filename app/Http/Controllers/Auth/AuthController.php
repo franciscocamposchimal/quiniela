@@ -213,9 +213,9 @@ class AuthController extends Controller
     {
         try{
             $this->validate($request, [
-                'name' => 'required|regex:/^([A-Za-z]+\.+\s)?([A-Za-z]+\s)?([A-Za-z])+\s+([A-Za-z])+$/|unique:users,name|max:255',
-                'username' => 'required|alpha_dash|unique:users,username|max:255',
-                'email' => 'required|email|unique:users,email|max:255'
+                'name' => 'required|regex:/^([A-Za-z]+$)?([A-Za-z]\s[A-Za-z]+$)?/|max:255',
+                'username' => 'required|alpha_dash|max:255',
+                'email' => 'email|max:255'
             ]);
             $user = JWTAuth::parseToken()->authenticate();
             if($user->role == 1){
@@ -260,9 +260,9 @@ class AuthController extends Controller
     {
         try{
             $this->validate($request, [
-                'name' => 'required|regex:/^([A-Za-z]+\.+\s)?([A-Za-z]+\s)?([A-Za-z])+\s+([A-Za-z])+$/|max:255',
+                'name' => 'required|regex:/^([A-Za-z]+$)?([A-Za-z]\s[A-Za-z]+$)?/|max:255',
                 'username' => 'required|alpha_dash|max:255',
-                'email' => 'required|email|max:255'
+                'email' => 'email|max:255'
             ]);
             
             $user = JWTAuth::parseToken()->authenticate();
