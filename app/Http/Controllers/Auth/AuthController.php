@@ -177,7 +177,11 @@ class AuthController extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         if($user->role == 1){
-            $user = User::all();
+            $user = User::withCount(['quinelas AS played' => function ($query){
+                $query->Where('home', '=', true)
+                ->orWhere('visit', '=', true)
+                ->orWhere('empate', '=', true);
+            }])->get();
             return response()->json(['users'=>$user],200);
         }else{
             return response()->json(['error'=>'Unauthorized'],401);
