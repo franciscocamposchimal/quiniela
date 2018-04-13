@@ -266,7 +266,7 @@ class AuthController extends Controller
             ]);
             
             $user = JWTAuth::parseToken()->authenticate();
-            if(($user->role) == 1 || ($user->id == $id ){
+            if(($user->role) == 1 || ($user->id == $id )){
                 $userUpdated = User::find($id);
                 $userUpdated->name = $request['name'];
                 $userUpdated->username = $request['username'];
