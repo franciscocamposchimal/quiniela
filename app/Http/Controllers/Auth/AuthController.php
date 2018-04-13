@@ -256,7 +256,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function updateUser(Request $request,$id)
+    public function updateUser(Request $request, $id)
     {
         try{
             $this->validate($request, [
@@ -266,7 +266,7 @@ class AuthController extends Controller
             ]);
             
             $user = JWTAuth::parseToken()->authenticate();
-            if($user->role == 1){
+            if(($user->role) == 1 || ($user->id == $id ){
                 $userUpdated = User::find($id);
                 $userUpdated->name = $request['name'];
                 $userUpdated->username = $request['username'];
@@ -289,7 +289,7 @@ class AuthController extends Controller
     public function resetPassword(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        if($user->role == 1){
+        if(($user->role == 1) || ($user->id == $id)){
             $pass = $request['password'];
             $userReset = User::find($id);
             $userReset->password = Hash::make($pass);
