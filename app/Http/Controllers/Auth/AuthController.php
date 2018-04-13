@@ -196,7 +196,7 @@ class AuthController extends Controller
     public function getUser($id)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        if($user->role == 1){
+        if(($user->role == 1 ) || ($user->id == $id)){
             $user = User::find($id);
             return response()->json(['user'=>$user],200);
         }else{
